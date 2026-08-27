@@ -1,0 +1,22 @@
+# Your own configuration and the broker CA the instructor hands out. Both are
+# per-student, and lab.yaml holds your OpenSearch password.
+lab.yaml
+certs/kafka-ca.crt
+
+# Virtualenvs. The dashboard gets its own so a Streamlit upgrade can never move
+# something the pipeline depends on.
+.venv/
+.venv-dashboard/
+
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.DS_Store
+
+# Fetched by scripts/fetch_jars.sh, only needed to build the pipeline image.
+jars/*.jar

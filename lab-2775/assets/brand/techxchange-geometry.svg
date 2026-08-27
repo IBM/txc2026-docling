@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="600" height="200"
+     role="img" aria-label="IBM TechXchange geometric motif">
+  <title>IBM TechXchange 2026 geometric motif</title>
+  <desc>The conference template's shape vocabulary as a two-row block of tiles: chevrons
+  and diamonds in the coral-to-purple gradient, coral and purple half-circles, and the
+  outlined hexagon and concentric-circle marks. Some tiles are deliberately empty — the
+  template's hero never fills the grid. Transparent background, so it sits on the black
+  hero treatment or on a white page.</desc>
+  <defs>
+    <!-- The template's hero gradient: coral at the top right falling through
+         magenta into purple at the bottom left. -->
+    <linearGradient id="txc-grad" x1="1" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FA4D56"/>
+      <stop offset="0.45" stop-color="#EE5396"/>
+      <stop offset="1" stop-color="#8A3FFC"/>
+    </linearGradient>
+  </defs>
+
+  <!-- top row -->
+  <g fill="none" stroke="#FF8389" stroke-width="4">
+    <path d="M50 8 L87 30 L87 72 L50 94 L13 72 L13 30 Z"/>
+    <path d="M13 30 L87 72 M13 72 L87 30 M50 8 L50 94"/>
+  </g>
+  <path d="M200 100 L200 55 L250 5 L300 55 L300 100 L250 50 Z" fill="url(#txc-grad)"/>
+  <path d="M350 5 L395 50 L350 95 L305 50 Z" fill="#8A3FFC"/>
+  <path d="M400 100 A50 50 0 0 1 500 100 Z" fill="#FA4D56"/>
+  <path d="M500 0 L600 0 L600 100 Z" fill="#A56EFF"/>
+
+  <!-- bottom row -->
+  <path d="M0 200 L0 155 L50 105 L100 155 L100 200 L50 150 Z" fill="#FA4D56"/>
+  <g fill="none" stroke="#FF8389" stroke-width="4">
+    <circle cx="192" cy="146" r="34"/>
+    <circle cx="212" cy="162" r="18"/>
+    <circle cx="224" cy="174" r="7"/>
+  </g>
+  <path d="M300 200 A50 50 0 0 1 400 200 Z" fill="#A56EFF"/>
+  <path d="M400 200 L400 155 L450 105 L500 155 L500 200 L450 150 Z" fill="url(#txc-grad)"/>
+  <path d="M500 200 L500 155 L550 105 L600 155 L600 200 L550 150 Z" fill="url(#txc-grad)"/>
+</svg>

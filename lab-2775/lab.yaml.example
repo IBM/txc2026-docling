@@ -1,0 +1,86 @@
+# LAB-2775 — your configuration. Copy to `lab.yaml` and fill it in.
+#
+#     cp lab.yaml.example lab.yaml
+#     ./setup.sh check
+#
+# Most of this is already filled in for you on the lab VM. The four values you
+# add yourself are marked YOU; each says which phase of the lab produces it.
+#
+# Everything else you own — five Kafka topics, a Flink application, a consumer
+# group, an OpenSearch account and its index — is *derived* from `student.id`.
+# That is not tidiness: two students sharing a consumer group makes Kafka split
+# the partitions between them, so most of the class sees no data at all, from a
+# pipeline that looks perfectly healthy.
+
+student:
+  # YOU — your two-digit id, from the classroom handout. The one value that
+  # differs from your neighbour's.
+  id: ""
+
+  # YOU (Phase 2) — the CRN of the bucket you create in the IBM Cloud console.
+  # There is a copy button beside it on the bucket's Configuration tab. It is
+  # also the last word on your bucket's *name*: names are globally unique
+  # across all of IBM Cloud, so if the suggested one was taken and you made a
+  # different one, the CRN is where that shows up. Leave it empty and the
+  # dashboard simply shows no bucket link.
+  bucket_crn: ""
+
+  # YOU — your OpenSearch password, from the classroom handout. Your account is
+  # `studentNN` and it may write `studentNN-*` and nothing else. The deployed
+  # job does not read this: it takes the same password from a Kubernetes
+  # Secret. This is what lets the dashboard on the VM search what the pipeline
+  # indexed, and answer questions from it.
+  opensearch_password: ""
+
+docling:
+  # YOU (Phase 1) — your own Docling trial. `url` is the *service* URL, which
+  # is not the address in your browser's bar: that one is the workbench. They
+  # are one instance under two hostnames and only the service URL works, so it
+  # is the only one to paste — the dashboard works the workbench link back out
+  # of it when it wants to link there.
+  url: ""
+  api_key: ""
+
+# ---------------------------------------------------------------------------
+# Below here is the workshop's own infrastructure — the same for everybody, and
+# already filled in on the lab VM. You should not have to touch any of it.
+# ---------------------------------------------------------------------------
+
+kafka:
+  bootstrap_servers: ""
+  api_key: ""
+  api_secret: ""
+  security_protocol: SASL_SSL
+  sasl_mechanism: PLAIN
+  # The certificate authority that signed the brokers, as a PEM file. The
+  # brokers use a private CA, so without this every connection fails — and it
+  # fails as a timeout, not as a certificate error.
+  ca_file: ./certs/kafka-ca.crt
+
+cmf:
+  # Confluent Manager for Apache Flink: where your job is deployed.
+  url: ""
+  environment: flink-env
+  auth: ""
+  # The published container image your Flink job runs from.
+  image: ""
+
+watsonx:
+  # The region is not a formality: each datacentre publishes its own catalogue,
+  # and a model the region does not serve is a 404 on the first batch rather
+  # than a fallback.
+  url: https://ca-tor.ml.cloud.ibm.com
+  project_id: ""
+
+opensearch:
+  hosts: ""
+  # A private CA again, exactly like the brokers'. This one is checked in — it
+  # is a public certificate.
+  ca_file: ./certs/root-ca.pem
+
+cos:
+  # Your bucket's region, for the console link.
+  region: ca-tor
+  # The name to create your bucket with, in Phase 2. A suggestion only: if it
+  # is taken, add your initials and paste the CRN of what you made above.
+  bucket_template: txc26-ws-{id}-uploads

@@ -1,0 +1,17 @@
+{
+  "bucket": "bucket-7q9bwndejrlvwc1",
+  "endpoint": "",
+  "key": "1016445.pdf",
+  "operation": "Object:Write",
+  "notification": {
+    "bucket_name": "bucket-7q9bwndejrlvwc1",
+    "content_type": "application/pdf",
+    "event_type": "Object:Write",
+    "format": "2.0",
+    "object_etag": "3cf3a49dfe06b198da72560cb3456ada",
+    "object_length": "128618",
+    "object_name": "1016445.pdf",
+    "request_id": "1c7249c8-0eca-4cfc-8392-ac7d416bc257",
+    "request_time": "2026-08-13T11:56:31.032Z"
+  }
+}

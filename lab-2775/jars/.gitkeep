@@ -1,0 +1,5 @@
+Place the Flink Kafka connector jar here before building the image, e.g.:
+  flink-sql-connector-kafka-<connector-version>-<flink-version>.jar
+Run ./scripts/fetch_jars.sh — it downloads the version matching the base image
+(cp-flink:2.1.3-cp2 -> Flink 2.1 -> flink-sql-connector-kafka-5.0.0-2.1.jar)
+and removes connector jars left over from an older Flink.

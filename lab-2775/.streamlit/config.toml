@@ -1,0 +1,22 @@
+# The conference's typeface and accent, applied to the whole page.
+#
+# This file exists because Streamlit sanitises the HTML that `st.markdown`
+# renders, and `font-family` is one of the properties it drops — a font set in
+# `inspector/brand.py`'s inline styles silently does nothing. The theme is the
+# only place the page's typeface can actually be chosen.
+#
+# No webfont is fetched: IBM Plex is used on a machine that has it (most IBM
+# laptops do) and the rest of the stack is what a machine without it falls back
+# to. That is deliberate — a workshop laptop behind a proxy should get plain
+# type, not a blank page waiting on fonts.google.com.
+[theme]
+font = '"IBM Plex Sans", "IBM Plex Sans Var", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+headingFont = '"IBM Plex Sans", "IBM Plex Sans Var", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif'
+codeFont = '"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace'
+# Carbon Blue 60, the template's one interactive colour. The page stays light:
+# the stage graph is drawn with light node fills and dark labels, and the black
+# treatment belongs to the header alone.
+primaryColor = "#0F62FE"
+
+[browser]
+gatherUsageStats = false

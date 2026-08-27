@@ -1,0 +1,34 @@
+# The build context is sent to the daemon in full before anything runs, so
+# anything here that is not COPYed is pure latency on every build. Both images
+# build from this directory (images/pipeline.Dockerfile, images/trigger.Dockerfile),
+# so one ignore file serves both.
+#
+# This file is latency, not safety: what actually lands in an image is decided
+# by the COPY lines, and tests/test_images.py is what holds those narrow.
+
+.venv/
+.venv-dashboard/
+.git/
+.pytest_cache/
+.ruff_cache/
+**/__pycache__/
+*.pyc
+
+# The student's own configuration, and both CAs. Neither image COPYs a
+# certificate: the pipeline's TaskManager mounts the OpenSearch CA from a
+# Kubernetes Secret, and the broker CA reaches Docling base64-encoded in the
+# subscription. So none of it belongs in a build context, let alone a layer.
+lab.yaml
+certs/
+
+# Everything neither image COPYs.
+tests/
+docs/
+lab-documents/
+scripts/
+assets/
+bootstrap.sh
+setup.sh
+pipeline.sh
+*.md
+.streamlit/

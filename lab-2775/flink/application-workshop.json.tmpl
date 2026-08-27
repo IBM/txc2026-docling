@@ -1,0 +1,97 @@
+{
+  "apiVersion": "cmf.confluent.io/v1",
+  "kind": "FlinkApplication",
+  "metadata": { "name": "${APP_NAME}" },
+  "spec": {
+    "image": "${PIPELINE_IMAGE}",
+    "imagePullPolicy": "${WS_PULL_POLICY}",
+    "flinkVersion": "v2_1",
+    "serviceAccount": "flink",
+    "flinkConfiguration": {
+      "taskmanager.numberOfTaskSlots": "1",
+      "restart-strategy": "exponential-delay",
+      "python.executable": "/opt/flink/pyflink/.venv/bin/python3",
+      "python.client.executable": "/opt/flink/pyflink/.venv/bin/python3",
+      "python.operator-chaining.enabled": "${WS_CHAINING}",
+      "taskmanager.memory.managed.fraction": "${WS_TM_MANAGED_FRACTION}",
+      "jobmanager.memory.jvm-metaspace.size": "192m",
+      "taskmanager.memory.jvm-metaspace.size": "192m",
+      "taskmanager.memory.jvm-overhead.min": "128m",
+      "kubernetes.jobmanager.cpu.limit-factor": "${WS_JM_CPU_LIMIT_FACTOR}",
+      "kubernetes.taskmanager.cpu.limit-factor": "${WS_TM_CPU_LIMIT_FACTOR}",
+      "kubernetes.taskmanager.memory.limit-factor": "${WS_TM_MEM_LIMIT_FACTOR}"
+    },
+    "jobManager": { "resource": { "memory": "${WS_JM_MEMORY}", "cpu": ${WS_JM_CPU} } },
+    "taskManager": { "resource": { "memory": "${WS_TM_MEMORY}", "cpu": ${WS_TM_CPU} } },
+    "job": {
+      "jarURI": "local:///opt/flink/opt/flink-python-2.1.3-cp2.jar",
+      "entryClass": "org.apache.flink.client.python.PythonDriver",
+      "args": [
+        "-pyclientexec", "/opt/flink/pyflink/.venv/bin/python3",
+        "-pym", "${JOB_MODULE}"
+      ],
+      "parallelism": 1,
+      "upgradeMode": "stateless",
+      "state": "${WS_STATE}"
+    },
+    "podTemplate": {
+      "metadata": { "name": "pod-template" },
+      "spec": {
+        "imagePullSecrets": [ { "name": "txc26-dcls-dev-conflient-read-pull-secret" } ],
+        "volumes": [
+          {
+            "name": "opensearch-ca",
+            "secret": {
+              "secretName": "${OPENSEARCH_SECRET_NAME}",
+              "items": [ { "key": "ca.pem", "path": "root-ca.pem" } ]
+            }
+          }
+        ],
+        "containers": [
+          {
+            "name": "flink-main-container",
+            "volumeMounts": [
+              { "name": "opensearch-ca", "mountPath": "/opt/flink/opensearch", "readOnly": true }
+            ],
+            "env": [
+              { "name": "KAFKA_BOOTSTRAP_SERVERS", "value": "${CMF_KAFKA_BOOTSTRAP}" },
+              { "name": "KAFKA_SECURITY_PROTOCOL", "value": "${CMF_KAFKA_SECURITY_PROTOCOL}" },
+              { "name": "KAFKA_CHUNKS_TOPIC", "value": "${KAFKA_CHUNKS_TOPIC}" },
+              { "name": "KAFKA_OUTPUT_TOPIC", "value": "${KAFKA_OUTPUT_TOPIC}" },
+              { "name": "KAFKA_CONSUMER_GROUP", "value": "${KAFKA_CONSUMER_GROUP}" },
+              { "name": "KAFKA_POLICY_TOPIC", "value": "${KAFKA_POLICY_TOPIC}" },
+              { "name": "KAFKA_QUARANTINE_TOPIC", "value": "${KAFKA_QUARANTINE_TOPIC}" },
+              { "name": "KAFKA_REJECTED_TOPIC", "value": "${KAFKA_REJECTED_TOPIC}" },
+              { "name": "SINK_TYPE", "value": "${WS_SINK_TYPE}" },
+              { "name": "OPENSEARCH_HOSTS", "value": "${OPENSEARCH_HOSTS}" },
+              { "name": "OPENSEARCH_INDEX", "value": "${OPENSEARCH_INDEX}" },
+              { "name": "OPENSEARCH_USERNAME", "value": "${OPENSEARCH_USERNAME}" },
+              { "name": "OPENSEARCH_VERIFY_CERTS", "value": "${OPENSEARCH_VERIFY_CERTS}" },
+              { "name": "OPENSEARCH_CA_LOCATION", "value": "${WS_OS_CA_MOUNT}" },
+              {
+                "name": "OPENSEARCH_PASSWORD",
+                "valueFrom": {
+                  "secretKeyRef": { "name": "${OPENSEARCH_SECRET_NAME}", "key": "${OPENSEARCH_USERNAME}" }
+                }
+              },
+              { "name": "EMBEDDING_MODEL_ID", "value": "${EMBEDDING_MODEL_ID}" },
+              { "name": "CHUNK_TOKENIZER_ID", "value": "${CHUNK_TOKENIZER_ID}" },
+              { "name": "EMBEDDING_DIMENSION", "value": "${EMBEDDING_DIMENSION}" },
+              { "name": "WATSONX_URL", "value": "${WATSONX_URL}" },
+              { "name": "WATSONX_PROJECT_ID", "value": "${WATSONX_PROJECT_ID}" },
+              { "name": "WATSONX_MAX_BATCH", "value": "${WATSONX_MAX_BATCH}" },
+              {
+                "name": "WATSONX_APIKEY",
+                "valueFrom": {
+                  "secretKeyRef": { "name": "${WATSONX_SECRET_NAME}", "key": "apikey" }
+                }
+              },
+              { "name": "PIPELINE_EMBED", "value": "${WS_EMBED}" },
+              { "name": "PIPELINE_PARALLELISM", "value": "1" }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
