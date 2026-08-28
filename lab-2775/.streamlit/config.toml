@@ -20,3 +20,12 @@ primaryColor = "#0F62FE"
 
 [browser]
 gatherUsageStats = false
+
+# A machine with no ~/.streamlit/credentials.toml — every freshly provisioned
+# student VSI — is asked for an email address on the first `streamlit run`, and
+# the pipeline waits at that prompt until someone presses Return. Declining the
+# prompt outright is the only sensible answer here: the workshop image is thrown
+# away at the end of the day, and `./pipeline.sh inspect` should open the
+# dashboard, not open a conversation.
+[server]
+showEmailPrompt = false
