@@ -7,12 +7,15 @@
 # leaves you a lab.yaml to fill in. It is safe to run again: a second run
 # updates the checkout and leaves your lab.yaml alone.
 #
-# It runs under a pipe, so it never asks a question — stdin is the script
-# itself, and a `read` here would swallow the rest of it. Anything you might
-# want to choose is an environment variable instead:
+# It runs under a pipe, so stdin is the script itself and a plain `read` would
+# swallow the rest of it. The one question it can ask — "this does not look
+# like a lab VM, carry on?" — it asks on /dev/tty instead. Everything else you
+# might want to choose is an environment variable, and note where it goes in
+# the pipeline: a prefix in front of `curl` would only reach curl.
 #
-#     LAB_DIR=~/somewhere   curl -L ibm.biz/txc26-2775-bootstrap | bash -
-#     LAB_REF=some-branch   ...
+#     curl -L ibm.biz/txc26-2775-bootstrap | LAB_DIR=~/somewhere bash -
+#     curl -L ibm.biz/txc26-2775-bootstrap | LAB_REF=some-branch bash -
+#     curl -L ibm.biz/txc26-2775-bootstrap | LAB_FORCE=1 bash -   # not a lab VM
 #
 # The VM is a vanilla RHEL 9 with a desktop. Nearly everything needed is
 # already there — curl, tar and coreutils are in @core, Firefox comes with the
@@ -32,7 +35,137 @@ info() { printf '  %s\n' "$*"; }
 warn() { printf '  \033[33m! %s\033[0m\n' "$*" >&2; }
 die()  { printf '\n\033[31m✗ %s\033[0m\n' "$*" >&2; exit 1; }
 
-# --- 1. git, if it is missing and we can get it ------------------------------
+# --- 0. is this a lab VM? ----------------------------------------------------
+# The class VMs are all alike: itzuser, on an itzvsi* host, on RHEL. This
+# script writes into $HOME and edits system files, so when none of that
+# matches it is most likely somebody's laptop and the question is worth
+# asking. stdin is taken by the pipe, so the question goes to the terminal
+# directly; where there is no terminal to ask on, LAB_FORCE=1 is the way past.
+LAB_VM_USER="itzuser"
+LAB_VM_HOST_PREFIX="itzvsi"
+
+os_id() { [[ -r /etc/os-release ]] && ( . /etc/os-release && printf '%s' "${ID:-}" ); }
+
+# 2>/dev/null goes first on purpose: it is in place before /dev/tty is opened,
+# so a machine without a terminal fails quietly instead of printing the shell's
+# own complaint about it.
+confirm() {
+  local reply=""
+  printf '  \033[33m%s\033[0m [y/N] ' "$1" 2>/dev/null >/dev/tty || return 1
+  read -r reply 2>/dev/null </dev/tty || return 1
+  [[ "$reply" == [Yy] || "$reply" == [Yy][Ee][Ss] ]]
+}
+
+check_lab_vm() {
+  local user host osid wrong=() w
+  user="$(id -un)"
+  host="${HOSTNAME:-$(uname -n)}"; host="${host%%.*}"
+  osid="$(os_id || true)"
+
+  [[ "$user" == "$LAB_VM_USER" ]] || wrong+=("the user is '$user', not '$LAB_VM_USER'")
+  [[ "$host" == "$LAB_VM_HOST_PREFIX"* ]] || wrong+=("the hostname is '$host', which does not start with '$LAB_VM_HOST_PREFIX'")
+  [[ "$osid" == "rhel" ]] || wrong+=("the OS is '${osid:-unknown}', not 'rhel'")
+
+  if [[ ${#wrong[@]} -eq 0 ]]; then
+    info "lab VM $host, as expected"
+    return 0
+  fi
+
+  warn "this does not look like a LAB-2775 VM:"
+  for w in "${wrong[@]}"; do warn "  - $w"; done
+  warn "it installs packages, edits your shell startup files, and comments out"
+  warn "the system idle timeout if it can."
+
+  if [[ -n "${LAB_FORCE:-}" ]]; then
+    info "LAB_FORCE is set — continuing anyway"
+    return 0
+  fi
+  if confirm "Continue anyway?"; then
+    info "continuing"
+    return 0
+  fi
+  die "stopped. If you did mean it:
+  curl -L ibm.biz/txc26-2775-bootstrap | LAB_FORCE=1 bash -"
+}
+
+# --- 1. the idle timeout -----------------------------------------------------
+# RHEL's hardening baselines (CIS, STIG) drop a `readonly TMOUT=900` into
+# /etc/profile.d, and bash then exits after fifteen idle minutes — the
+# student's terminal window closes on its own while they are reading the guide
+# or watching the dashboard. `readonly` is the awkward part: no later
+# profile.d file and no ~/.bashrc can unset it again, so the declaration
+# itself has to be commented out, and that needs root. Where there is no root
+# there is still the ordinary, non-readonly case, which ~/.bashrc can undo.
+TMOUT_SYSTEM_CHANGED=0
+
+# Does this file set it? Our own lines are marked and do not count — the
+# `unset` below mentions TMOUT too, and a second run must not comment it out.
+# Written without a pipeline exit status: `grep -q` closing early would leave
+# pipefail looking at a SIGPIPE.
+has_tmout() { [[ -n "$(grep -E '^[^#]*TMOUT' "$1" 2>/dev/null | grep -v 'LAB-2775' || true)" ]]; }
+
+# Every startup file with a live TMOUT in it, one per line.
+tmout_files() {
+  local f
+  for f in /etc/profile /etc/bashrc /etc/profile.d/*.sh; do
+    [[ -f "$f" ]] || continue
+    has_tmout "$f" && printf '%s\n' "$f"
+  done
+  return 0
+}
+
+# Comment out the lines that mention it, keeping the original as .lab2775.bak.
+# Idempotent: a commented line, and anything of ours, is left alone.
+comment_out_tmout() {
+  local file="$1" sudo="${2:-}"
+  $sudo sed -E -i.lab2775.bak \
+    -e '/LAB-2775/b' \
+    -e '/^[[:space:]]*#/! s|^(.*TMOUT.*)$|# \1  # LAB-2775: this closed the terminal mid-lab|' \
+    "$file"
+}
+
+disable_tmout() {
+  local files=() f sudo=""
+
+  # The student's own files first: no root needed for these.
+  for f in "$HOME/.bashrc" "$HOME/.bash_profile" "$HOME/.profile"; do
+    if [[ -f "$f" ]] && has_tmout "$f"; then
+      comment_out_tmout "$f"
+      info "commented out TMOUT in $f"
+    fi
+  done
+  # And a belt-and-braces unset for whatever sets it that we did not find. It
+  # is a no-op when TMOUT is readonly, hence everything above.
+  local rc="$HOME/.bashrc" marker="# added by the LAB-2775 bootstrap — no idle timeout"
+  if ! grep -qF "$marker" "$rc" 2>/dev/null; then
+    printf '\n%s\nunset TMOUT 2>/dev/null || true  # LAB-2775\n' "$marker" >> "$rc"
+  fi
+
+  while IFS= read -r f; do files+=("$f"); done < <(tmout_files)
+  if [[ ${#files[@]} -eq 0 ]]; then
+    info "no system idle timeout here — your terminal will stay open"
+    return 0
+  fi
+
+  if [[ "$(id -u)" != "0" ]]; then
+    if sudo -n true 2>/dev/null; then
+      sudo="sudo -n"
+    else
+      warn "an idle timeout is set in ${files[*]} and this account cannot edit"
+      warn "it without a password. If a terminal window closes on its own during"
+      warn "the lab, that is why — reopen it and tell the instructor."
+      return 0
+    fi
+  fi
+
+  for f in "${files[@]}"; do
+    comment_out_tmout "$f" "$sudo"
+    info "commented out TMOUT in $f (original kept as $f.lab2775.bak)"
+  done
+  TMOUT_SYSTEM_CHANGED=1
+}
+
+# --- 2. git, if it is missing and we can get it ------------------------------
 # RHEL 9's "Server with GUI" does not include git, and a lab VM may not be
 # subscribed to any repository — in which case dnf fails and the tarball path
 # below is what saves the class. Nothing else is installed: the lab needs no
@@ -60,7 +193,7 @@ install_git() {
   have_git
 }
 
-# --- 2. uv -------------------------------------------------------------------
+# --- 3. uv -------------------------------------------------------------------
 # It brings its own Python. RHEL 9 ships 3.9 and this lab needs 3.12 (see
 # .python-version), so nothing here touches the system interpreter.
 install_uv() {
@@ -85,7 +218,7 @@ ensure_path() {
   info "added ~/.local/bin to your PATH in ~/.bashrc"
 }
 
-# --- 3. the lab itself -------------------------------------------------------
+# --- 4. the lab itself -------------------------------------------------------
 # A sparse checkout of one directory: the repository holds several labs and
 # this is one of them. It is a real clone, so a fix published during the class
 # reaches you with `git pull`.
@@ -128,6 +261,12 @@ fetch_with_curl() {
 
 # --- go ----------------------------------------------------------------------
 printf '\n\033[1mLAB-2775 — From Bucket to RAG\033[0m\n'
+
+step "This machine"
+check_lab_vm
+
+step "Terminal idle timeout"
+disable_tmout
 
 step "System packages"
 if install_git; then :; else warn "continuing without git"; fi
@@ -177,6 +316,11 @@ if [[ ! -f certs/kafka-ca.crt && -f "$HOME/kafka-ca.crt" ]]; then
 fi
 
 printf '\n\033[1m✓ Ready.\033[0m\n\n'
+if [[ "$TMOUT_SYSTEM_CHANGED" == 1 ]]; then
+  info "this terminal still carries the old idle timeout and will close on its"
+  info "own — open a fresh one before you start, and it will stay open."
+  printf '\n'
+fi
 cat <<NEXT
   Your lab is in:   $LAB
 
