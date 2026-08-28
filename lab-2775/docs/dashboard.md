@@ -172,12 +172,17 @@ and touches no offset.
 | `OPENSEARCH_HOSTS` / `_INDEX` / `_USERNAME` | derived from `student.id` by `./pipeline.sh inspect` |
 | `OPENSEARCH_PASSWORD` | the classroom handout, pasted into `lab.yaml` — the *deployed job* takes the same password from a Kubernetes Secret instead |
 | `OPENSEARCH_CA_LOCATION` | `./opensearch/root-ca.pem`, checked in. The cluster's certificate is from a private CA, exactly like the Kafka brokers'; without this the tab reads "not reachable" when the truth is "I do not trust this certificate" |
-| `WATSONX_APIKEY`, `WATSONX_PROJECT_ID` | the same two the embed stage uses |
+| `WATSONX_APIKEY`, `WATSONX_PROJECT_ID` | `watsonx.api_key` and `watsonx.project_id` in `lab.yaml` — the same two the embed stage uses, except that the *deployed job* takes the key from a Kubernetes Secret instead |
 | `WATSONX_LLM_MODEL_ID` | the model that answers. ca-tor serves two — `meta-llama/llama-3-3-70b-instruct` and `mistralai/mistral-small-3-1-24b-instruct-2503` — and a third is a 404, not a fallback |
 
 An empty index is not a failure and the tab says which of the three it is: no
 cluster, no index (`./setup.sh index`), or an index with nothing in
 it yet (upload a document and watch the count).
+
+`./setup.sh check` tests the key when one is set — it embeds a single word, so
+a key that is missing, wrong, or not authorized on the project is a line there
+rather than a question that never gets answered. No key is not an error: the
+line reads `·` and everything except Ask still works.
 
 ## Two things the numbers will not tell you
 

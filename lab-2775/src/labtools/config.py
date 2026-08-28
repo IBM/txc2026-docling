@@ -179,6 +179,7 @@ MAPPING: list[tuple[str, str]] = [
     ("cmf.image", "PIPELINE_IMAGE"),
     ("watsonx.url", "WATSONX_URL"),
     ("watsonx.project_id", "WATSONX_PROJECT_ID"),
+    ("watsonx.api_key", "WATSONX_APIKEY"),
     ("opensearch.hosts", "OPENSEARCH_HOSTS"),
     ("cos.region", "COS_BUCKET_REGION"),
     ("cos.endpoint", "COS_ENDPOINT"),

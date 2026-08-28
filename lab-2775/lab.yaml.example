@@ -72,6 +72,15 @@ watsonx:
   url: https://ca-tor.ml.cloud.ibm.com
   project_id: ""
 
+  # The API key those calls authenticate with. The *deployed job* does not read
+  # this — it takes the same key from a Kubernetes Secret — so this is what
+  # lets the dashboard's Ask tab work: answering a question embeds it with the
+  # same model the chunks were embedded with and then asks a chat model, which
+  # is two watsonx.ai calls made from the VM rather than from the cluster.
+  # Leave it empty and every other tab still works; Ask says what is missing.
+  # `./setup.sh check` tests it when it is set, by embedding one word.
+  api_key: ""
+
 opensearch:
   hosts: ""
   # A private CA again, exactly like the brokers'. This one is checked in — it

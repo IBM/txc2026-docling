@@ -15,13 +15,24 @@ Each of these has cost a rehearsal an afternoon:
 * an OpenSearch account that can log in but cannot write ``studentNN-*``, which
   is a 403 on every record from a job that reports itself RUNNING;
 * a watsonx model id the region does not serve, which is a 404 on the first
-  batch and not a fallback to something else.
+  batch and not a fallback to something else;
+* a watsonx API key that is present but wrong, or right but not authorized on
+  the project — the Ask tab's only symptom is that no question is ever answered.
+
+The last one is the only probe here that needs a credential the *job* does not:
+the deployed job takes its key from a Kubernetes Secret, so this tests what the
+dashboard on this machine will use, and nothing else.
 """
 
 from __future__ import annotations
 
 import os
 import sys
+
+# The watsonx probe reuses the pipeline's own client rather than restating the
+# IAM exchange; this is what lets it run from the repo root uninstalled, exactly
+# as scripts/setup_opensearch.py does.
+sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", "src"))
 
 OK, BAD, SKIP = "  ✓", "  ✗", "  ·"
 
@@ -51,6 +62,32 @@ def brief(exc: Exception) -> str:
     if "Connection refused" in text:
         return "connection refused — nothing is listening there"
     return text.split("\n")[0][:120]
+
+
+def watsonx_brief(exc: Exception) -> str:
+    """A :class:`WatsonxError` as one clause a student can act on.
+
+    Its own message carries the HTTP status and 300 characters of an IBM Cloud
+    error body, which is the right thing in a job log and too much on a line
+    that has to be read beside four others. The three statuses below are the
+    three different mistakes; anything else is passed through, because an
+    unrecognised failure is better shown than summarised away.
+    """
+    text = str(exc)
+    if "IAM token request failed" in text:
+        # BXNIM0415E is "could not be found", which is what a mistyped or
+        # deleted key looks like; the rest are disabled or expired keys.
+        if "BXNIM0415E" in text:
+            return "IBM Cloud does not know that API key — check watsonx.api_key"
+        return f"IBM Cloud refused the API key — {text.split('HTTP ', 1)[-1][:100]}"
+    if "HTTP 403" in text:
+        return "the key is valid but not authorized on that project — check watsonx.project_id"
+    if "HTTP 404" in text:
+        return "no such project, or this region does not serve that model"
+    if "EMBEDDING_DIMENSION" in text:
+        # Already phrased for a student, and the detail is the whole point.
+        return text
+    return text.split("\n")[0][:160]
 
 
 def check_kafka() -> bool:
@@ -148,10 +185,11 @@ def check_opensearch() -> bool:
 def check_watsonx() -> bool:
     """The model id and the region, which are chosen together.
 
-    Not an embedding call: that needs the API key, and a student never has one
-    — the deployed job reads it from a Kubernetes Secret. What is checkable
-    from here is whether the region serves the model at all, which is the
-    mistake that produces a 404 on the job's first batch.
+    Unauthenticated, and deliberately so: the catalogue is public, so this line
+    is the same for a student who has pasted an API key and one who has not. It
+    answers one question — does this region serve this model at all — which is
+    the mistake that produces a 404 on the job's first batch. Whether the key
+    works is the next probe.
     """
     url = os.environ.get("WATSONX_URL", "")
     model = os.environ.get("EMBEDDING_MODEL_ID", "")
@@ -179,9 +217,52 @@ def check_watsonx() -> bool:
     return False
 
 
+def check_watsonx_key() -> bool:
+    """The API key, tested the way the Ask tab will use it: one real embedding.
+
+    A key is not required to run the lab — the deployed job reads its own from
+    a Kubernetes Secret, and every panel of the dashboard except Ask works
+    without one. But a key that is present and *wrong* is worth a line here,
+    because none of the three ways it can be wrong announces itself: a bad key
+    is a 400 from IAM, a good key with no access to the project is a 403 from
+    the first question a student asks, and a model whose vectors are not the
+    length the index was built for is a rejected bulk write much later still.
+
+    So this embeds one word. It reuses ``pipeline.watsonx`` rather than
+    restating the IAM exchange — the same client the embed stage runs — and it
+    creates nothing, which keeps the read-only discipline of every probe above.
+    """
+    api_key = os.environ.get("WATSONX_APIKEY", "")
+    project = os.environ.get("WATSONX_PROJECT_ID", "") or os.environ.get("WATSONX_SPACE_ID", "")
+    if not api_key:
+        line(SKIP, "watsonx key", "watsonx.api_key is empty — the Ask tab needs it to answer")
+        return False
+    if not project:
+        # Already a hard problem in `labtools.config check`; here it would only
+        # produce a confusing 400 about a missing container.
+        line(SKIP, "watsonx key", "watsonx.project_id is empty")
+        return False
+
+    from pipeline.config import EmbeddingConfig, WatsonxConfig
+    from pipeline.watsonx import WatsonxEmbeddings, WatsonxError
+
+    try:
+        with WatsonxEmbeddings(WatsonxConfig(), EmbeddingConfig()) as client:
+            vector = client.embed(["ping"])[0]
+    except WatsonxError as exc:
+        line(BAD, "watsonx key", watsonx_brief(exc))
+        return False
+    except Exception as exc:  # noqa: BLE001
+        line(BAD, "watsonx key", brief(exc))
+        return False
+    line(OK, "watsonx key", f"embeds in project {project[:8]}…, {len(vector)} dimensions")
+    return True
+
+
 def main() -> int:
     print("Reachable from here")
-    results = [check_kafka(), check_cmf(), check_opensearch(), check_watsonx()]
+    results = [check_kafka(), check_cmf(), check_opensearch(),
+               check_watsonx(), check_watsonx_key()]
     if not all(results):
         print("\n  Some of that is not ready. Every line above is independent —")
         print("  a ✗ on OpenSearch does not stop you deploying a pipeline.")
@@ -192,6 +273,6 @@ if __name__ == "__main__":
     import warnings
 
     # verify=False against CMF is deliberate (see above); the warning would fire
-    # once per probe and bury the four lines this script exists to print.
+    # once per probe and bury the lines this script exists to print.
     warnings.filterwarnings("ignore", message="Unverified HTTPS request")
     sys.exit(main())

@@ -817,8 +817,8 @@ with tab_ask:
         if not cfg.watsonx_ready:
             st.error(
                 "The retrieval half works, but answering needs watsonx.ai: set "
-                "`watsonx.project_id` in your `lab.yaml`, and `WATSONX_APIKEY` in your "
-                "shell — the same two the pipeline's embed stage uses."
+                "`watsonx.project_id` and `watsonx.api_key` in your `lab.yaml` — the same "
+                "two the pipeline's embed stage uses."
             )
 
         with st.form("ask"):
