@@ -513,7 +513,7 @@ with tab_dag:
         st.info(
             "No bucket is configured, so both stages above are greyed out and there is no "
             "upload link. Copy your bucket's CRN from the IBM Cloud console — there is a "
-            "copy button on its Configuration tab — into `student.bucket_crn` in your "
+            "copy button on its Overview tab — into `student.bucket_crn` in your "
             "`lab.yaml`, then restart this dashboard.",
             icon="ℹ️",
         )
