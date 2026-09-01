@@ -1,7 +1,7 @@
 # MAINTAINERS
 
-Mo McElaney - mmcelaney@us.ibm.com
+Michele Dolfi - dol@zurich.ibm.com
 
-JJ Asghar - jja@ibm.com
+Peter Staar - taa@zurich.ibm.com
 
-Brad Topol - btopol@us.ibm.com
+Cesar Berrospi Ramis - ceb@zurich.ibm.com
