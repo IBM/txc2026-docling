@@ -52,7 +52,7 @@ dependencies = []
 # so those stages stay unavailable until CMF is >= 2.4.1.
 image = [
     "apache-flink==2.1.3",
-    "requests==2.32.3",
+    "requests==2.33.0",
     "opensearch-py==2.8.0",
 ]
 
