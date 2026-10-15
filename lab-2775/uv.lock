@@ -5,45 +5,45 @@ resolution-markers = [
     "python_full_version >= '3.14' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version < '3.11' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version < '3.11' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and extra != 'group-23-docling-ingest-pipeline-convert' and extra == 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and extra != 'group-23-docling-ingest-pipeline-convert' and extra == 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version < '3.11' and extra != 'group-23-docling-ingest-pipeline-convert' and extra == 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version < '3.11' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and extra != 'group-23-docling-ingest-pipeline-convert' and extra == 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and extra != 'group-23-docling-ingest-pipeline-convert' and extra == 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version == '3.11.*' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version == '3.11.*' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version == '3.11.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version < '3.11' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version < '3.11' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version < '3.11' and extra != 'group-23-docling-ingest-pipeline-convert' and extra == 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version < '3.11' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version < '3.11' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
 ]
 conflicts = [[
@@ -524,7 +524,7 @@ name = "cuda-bindings"
 version = "13.4.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cuda-pathfinder" },
+    { name = "cuda-pathfinder", marker = "(python_full_version < '3.11' and sys_platform == 'emscripten') or (python_full_version < '3.11' and sys_platform == 'win32') or (sys_platform != 'emscripten' and sys_platform != 'win32')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a3/9e/684f3ef34af3089a29286817b7deb23f7aa028bad0adbceaa48ad02085af/cuda_bindings-13.4.1-cp310-cp310-manylinux_2_24_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:9f29c65d30826c335aa59031e5dfec5ae306a9b259c9cc64d440e9a1ef9e3159", size = 6508095, upload-time = "2026-09-10T01:16:39.465Z" },
@@ -570,43 +570,43 @@ wheels = [
 
 [package.optional-dependencies]
 cublas = [
-    { name = "nvidia-cublas", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
-    { name = "nvidia-cuda-nvrtc", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
+    { name = "nvidia-cublas", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
+    { name = "nvidia-cuda-nvrtc", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
 ]
 cudart = [
-    { name = "nvidia-cuda-runtime", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
+    { name = "nvidia-cuda-runtime", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
 ]
 cufft = [
-    { name = "nvidia-cufft", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
-    { name = "nvidia-nvjitlink", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
+    { name = "nvidia-cufft", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
+    { name = "nvidia-nvjitlink", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
 ]
 cufile = [
     { name = "nvidia-cufile", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
 ]
 cupti = [
-    { name = "nvidia-cuda-cupti", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
+    { name = "nvidia-cuda-cupti", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
 ]
 curand = [
-    { name = "nvidia-curand", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
+    { name = "nvidia-curand", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
 ]
 cusolver = [
-    { name = "nvidia-cublas", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
-    { name = "nvidia-cusolver", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
-    { name = "nvidia-cusparse", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
-    { name = "nvidia-nvjitlink", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
+    { name = "nvidia-cublas", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
+    { name = "nvidia-cusolver", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
+    { name = "nvidia-cusparse", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
+    { name = "nvidia-nvjitlink", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
 ]
 cusparse = [
-    { name = "nvidia-cusparse", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
-    { name = "nvidia-nvjitlink", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
+    { name = "nvidia-cusparse", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
+    { name = "nvidia-nvjitlink", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
 ]
 nvjitlink = [
-    { name = "nvidia-nvjitlink", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
+    { name = "nvidia-nvjitlink", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
 ]
 nvrtc = [
-    { name = "nvidia-cuda-nvrtc", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
+    { name = "nvidia-cuda-nvrtc", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
 ]
 nvtx = [
-    { name = "nvidia-nvtx", marker = "(platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux') or (platform_machine == 'AMD64' and sys_platform == 'win32')" },
+    { name = "nvidia-nvtx", marker = "(python_full_version < '3.11' and platform_machine == 'AMD64' and sys_platform == 'win32') or (platform_machine == 'aarch64' and sys_platform == 'linux') or (platform_machine == 'x86_64' and sys_platform == 'linux')" },
 ]
 
 [[package]]
@@ -674,19 +674,19 @@ wheels = [
 
 [[package]]
 name = "docling"
-version = "2.126.0"
+version = "2.132.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "docling-slim", extra = ["standard"], marker = "extra == 'group-23-docling-ingest-pipeline-convert' or (extra == 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local')" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/03/8e/31ec8a0433c50826c597c0757268ea64ce6fb0b60466ee6ecd1e00c5ef4f/docling-2.126.0.tar.gz", hash = "sha256:8a7f0f7767eea5a4dcdd2adce08c236c4d58e95e5025cae6657c619ca29efbca", size = 9090, upload-time = "2026-09-04T15:57:25.402Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/7a/6f/6614bebc7516408c95cf36c6183f14076542a3b33131ccb549a02564e55e/docling-2.132.0.tar.gz", hash = "sha256:33b2ce9e34206d428fc0f23b56b312ff35547c33cebfcefede3a025c88181caf", size = 9073, upload-time = "2026-10-01T09:47:26.795Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/9e/e4/6192f2b02bea1cbfb1b4257a814a9a6909cb86a427299fa0706278414463/docling-2.126.0-py3-none-any.whl", hash = "sha256:ce4515a2817b46bf62c8f00ababd5fc51851e8e4f435206f56c88169c2eac6dd", size = 5228, upload-time = "2026-09-04T15:57:24.333Z" },
+    { url = "https://files.pythonhosted.org/packages/a2/ff/7689e3a3036c776526dbed4a6ed049fe5502c678fe74d145e66891953e4b/docling-2.132.0-py3-none-any.whl", hash = "sha256:efd35e2f3832179c0c25476df763a13d2f14262d9e8dd3c4edad2aa7597bafde", size = 5221, upload-time = "2026-10-01T09:47:25.619Z" },
 ]
 
 [[package]]
 name = "docling-core"
-version = "2.96.0"
+version = "2.101.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "defusedxml" },
@@ -700,13 +700,14 @@ dependencies = [
     { name = "pydantic" },
     { name = "pydantic-settings" },
     { name = "pyyaml" },
+    { name = "requests", version = "2.34.2", source = { registry = "https://pypi.org/simple" } },
     { name = "tabulate" },
     { name = "typer" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ed/eb/853a4bfe313dabcbcf0c9e86bb83498ca4d708674b7bc97b159333ae27fa/docling_core-2.96.0.tar.gz", hash = "sha256:6285b2a461a830a7b4da052fef5253a08a141be46ef8a1ce9b4b47b92323b700", size = 375865, upload-time = "2026-09-10T12:16:00.776Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/c3/e1/adf80e01ad2624610a029f748530b53471dfa9cae4bfe0a66cc4b1659d7e/docling_core-2.101.1.tar.gz", hash = "sha256:4b338a4c69e20145a256809eef3cb9954b5baa0ff51e84d41c25268143f6ce24", size = 407906, upload-time = "2026-10-08T15:12:55.17Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/92/30/0819c61aeb96584a61101d06ecbe81226db1326c3097aa966411ddf86d4a/docling_core-2.96.0-py3-none-any.whl", hash = "sha256:c88c11452af805402df9477e35fb1ee8e289bdd9007969127dc1d43f760add96", size = 302135, upload-time = "2026-09-10T12:15:58.796Z" },
+    { url = "https://files.pythonhosted.org/packages/b3/e4/5b8bf33854beb56c1b702e58c82f5615d2d96f4bef358c06f72f1dc9a9ca/docling_core-2.101.1-py3-none-any.whl", hash = "sha256:0fbadbf21fb1389f75c2ec4c5c979016c0fe532f29d001467d5a82f92410cc6b", size = 317800, upload-time = "2026-10-08T15:12:53.471Z" },
 ]
 
 [package.optional-dependencies]
@@ -820,7 +821,7 @@ trigger = [
 
 [[package]]
 name = "docling-parse"
-version = "7.19.1"
+version = "7.22.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "docling-core" },
@@ -828,52 +829,53 @@ dependencies = [
     { name = "pydantic" },
     { name = "pywin32", marker = "sys_platform == 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2a/b5/149f0480254b73aa2be0a815d8caa223cba630ee1b0baa0b1332b02e0639/docling_parse-7.19.1.tar.gz", hash = "sha256:265330b0b02595a6656a030fda2f623c89b7a7316672daa607ec6f94faca5b76", size = 6983618, upload-time = "2026-09-11T10:48:35.636Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d7/ea/f609987314655e8ad0136d68d0961f60a28421d2cd79da5a67d59f4c0c92/docling_parse-7.22.3.tar.gz", hash = "sha256:100e9c320e199343cd7bb03a816956e578109dd53d76cc72ecbd9d9e89954dc6", size = 7050703, upload-time = "2026-10-13T04:24:34.028Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4c/4c/56f3502d83942314e6c7b65e6e97a120a33f5ece2486977591bf5f9cdb19/docling_parse-7.19.1-cp310-cp310-macosx_14_0_arm64.whl", hash = "sha256:7df635ef70cda105c11c6d16acf7bf3d96b0ec0e85f3ea9cb0a0a43f7a412b04", size = 9798992, upload-time = "2026-09-11T10:47:29.136Z" },
-    { url = "https://files.pythonhosted.org/packages/0f/55/05cceb71250f761ddc97311b0403046e2575ed1f25720ea869be1d6a564e/docling_parse-7.19.1-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:210fde578aa5580ef98d322a3b51a049e0e78cfcb444131a9c010a6acea5357f", size = 10391182, upload-time = "2026-09-11T10:47:32.053Z" },
-    { url = "https://files.pythonhosted.org/packages/9e/ab/025447c1fae0b40c1e6b0997c400e86c60d7a253d513967909cfd5a046f6/docling_parse-7.19.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:fb3915ceae462a73ff78903d602a95fb029e361473fedb86e7d7d8c8e913649d", size = 10657573, upload-time = "2026-09-11T10:47:34.352Z" },
-    { url = "https://files.pythonhosted.org/packages/27/8c/efb3a03a459be611155134186a1c063c3c0494cbf4b805b0c2b56a4845be/docling_parse-7.19.1-cp310-cp310-win_amd64.whl", hash = "sha256:6bfee94ccf8a421e4cd461daf2a8056b3653a24ca3d8168bf3aedf0a26075333", size = 11802921, upload-time = "2026-09-11T10:47:36.849Z" },
-    { url = "https://files.pythonhosted.org/packages/6c/71/f150feb7276418519e67f6e69ce592fd477e11a59826c701c0796c4f4fd1/docling_parse-7.19.1-cp310-cp310-win_arm64.whl", hash = "sha256:ee19d5c39914c1b3da12cb99cfac3fc7eba54cbdf086d300ff8bf227d2f7c6ba", size = 9086376, upload-time = "2026-09-11T10:47:39.478Z" },
-    { url = "https://files.pythonhosted.org/packages/a4/e7/23886f9c2624dc0a1953297afd67a95fd7afa356271cbb7f7af5d09afd7a/docling_parse-7.19.1-cp311-cp311-macosx_14_0_arm64.whl", hash = "sha256:a25d9617b8de8be9848439d2b348f4130391bb21e42cadc9ab6c89b2b85f05ce", size = 9799917, upload-time = "2026-09-11T10:47:41.908Z" },
-    { url = "https://files.pythonhosted.org/packages/15/77/a41c66455751e30a574e6d794049d9696a5d21a4232a53531bcbaee01dd3/docling_parse-7.19.1-cp311-cp311-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:521039710ad4481fbac2c130ee7b593f93dc14165982233327a28015ed4f2c79", size = 10359983, upload-time = "2026-09-11T10:47:44.759Z" },
-    { url = "https://files.pythonhosted.org/packages/9e/e2/b019ace79f1a78de0edfab85c12348c826605e4453dbc7c819d690d9f23a/docling_parse-7.19.1-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:f037440ae3e49445609288deab04cc240feada26293f979d95d5a99db70189bb", size = 10764738, upload-time = "2026-09-11T10:47:47.094Z" },
-    { url = "https://files.pythonhosted.org/packages/bc/ef/6ef1522ded136af1318864b88ffb3e17acb279d1a9b595e902d4368288bc/docling_parse-7.19.1-cp311-cp311-win_amd64.whl", hash = "sha256:0658f08a09b98e758ee5a37b635c232fe2b6edbbfd4741c347ee05a10deed7f4", size = 11803761, upload-time = "2026-09-11T10:47:49.613Z" },
-    { url = "https://files.pythonhosted.org/packages/51/36/fe07d4ae77234e145bfd6a6fa44bca51c061a148c570334bbf4efb6ec60e/docling_parse-7.19.1-cp311-cp311-win_arm64.whl", hash = "sha256:c0f4a9ab2a4823c0eda7c21378ad4cf59a6f7c47a5da712c2dfe03e0d61cad79", size = 9087960, upload-time = "2026-09-11T10:47:52.086Z" },
-    { url = "https://files.pythonhosted.org/packages/57/b2/e54d26337c6d023074ab4c5010006e80c7536b7a381ae02817608bf3d374/docling_parse-7.19.1-cp312-cp312-macosx_14_0_arm64.whl", hash = "sha256:386b313fb75d742fcb54df6ca438dbd517e8f19f9a7b1fe20214f40e3cfb9a9b", size = 9800804, upload-time = "2026-09-11T10:47:54.658Z" },
-    { url = "https://files.pythonhosted.org/packages/80/64/9ca0d9de3de750570499e52dab88a4a842c7b8a8c53b8aa398711252b1f0/docling_parse-7.19.1-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:e4650d6046b34688c4da2811169d7b7c3048cd2ea950aa0398af341992fde5e0", size = 10363627, upload-time = "2026-09-11T10:47:57.359Z" },
-    { url = "https://files.pythonhosted.org/packages/d4/29/0daf327c7353ec0dfdbbd29bec2cd59208e917319aa5c15a80dd7702ec94/docling_parse-7.19.1-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:70c26699dc41ed0f7770f4480e08250c5bfefe9f3c2efc08e54c4c6d270fcfea", size = 10768267, upload-time = "2026-09-11T10:48:00.48Z" },
-    { url = "https://files.pythonhosted.org/packages/5c/d5/b546697c9e212dc6d2eef0f524d9c5d176baa9db96b2824cdc6a5d1b8719/docling_parse-7.19.1-cp312-cp312-win_amd64.whl", hash = "sha256:d11abb6fceee55c7a06b402afe6e57f77f1a4ba44fead32397e6b14c84f3e4d6", size = 11810518, upload-time = "2026-09-11T10:48:03.731Z" },
-    { url = "https://files.pythonhosted.org/packages/28/46/e2bfbb70506cb29d3dbfe857aff633b39d7e57ba55fc2353f6fb556f2151/docling_parse-7.19.1-cp312-cp312-win_arm64.whl", hash = "sha256:4c07f309753e5978fda14397c761b6b96fcc616193a9b91fcee08e7c09a6f941", size = 9088333, upload-time = "2026-09-11T10:48:06.495Z" },
-    { url = "https://files.pythonhosted.org/packages/71/0f/54482300d33d2cc67f991ceeeab4424163cbc01890d54182a2b854712919/docling_parse-7.19.1-cp313-cp313-macosx_14_0_arm64.whl", hash = "sha256:cb20c568c5c95cb3b9aa9c9dd26ccd1db168862765c7a2c10476cd6145909575", size = 9800841, upload-time = "2026-09-11T10:48:09.379Z" },
-    { url = "https://files.pythonhosted.org/packages/9c/ea/52a90a56d16bacb4bd4037ad86676b042c4f31e1176df0dfc58fef408642/docling_parse-7.19.1-cp313-cp313-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:8ad48ef438181645569057baebf9215ea155f68dde7e7a31bb841d00a5332483", size = 10363382, upload-time = "2026-09-11T10:48:11.779Z" },
-    { url = "https://files.pythonhosted.org/packages/23/05/2b872fff726b4c94f181778a1c19984de41c76e10da6ce4e77dbfb3108f6/docling_parse-7.19.1-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:7850c04f72c1bde86b80ccca04b13225d8c41373adcb0d8fbd40604aaf18b095", size = 10768237, upload-time = "2026-09-11T10:48:14.717Z" },
-    { url = "https://files.pythonhosted.org/packages/78/5b/aafb66abac254566914344aff13833bb2b466741f7730b656056a5b71778/docling_parse-7.19.1-cp313-cp313-win_amd64.whl", hash = "sha256:4a64eaf70a5401603a432777c524860b6b1420c06ac21748b358ed95e7365551", size = 11810339, upload-time = "2026-09-11T10:48:17.796Z" },
-    { url = "https://files.pythonhosted.org/packages/b9/4e/017ff4840bcd1599f2e26cf25b72fbca224f2743fb014293c79cea6d6ece/docling_parse-7.19.1-cp313-cp313-win_arm64.whl", hash = "sha256:07c10b6c8f4d776c182c5fa3405b17f9d4354273861c189e696f868aba50e8d9", size = 9088419, upload-time = "2026-09-11T10:48:20.334Z" },
-    { url = "https://files.pythonhosted.org/packages/3e/d4/2e5fca3730100871c79ed2c5e20f6aa1a2bc08236a4755a970e64f7f14ae/docling_parse-7.19.1-cp314-cp314-macosx_14_0_arm64.whl", hash = "sha256:ee1cb625f67ce5f5496c69699b0d84e437915e73227f71abd22d32ebe4938af7", size = 9801715, upload-time = "2026-09-11T10:48:22.897Z" },
-    { url = "https://files.pythonhosted.org/packages/d9/08/31c65d7a6f60b55e5e5e0515a64cbe83dae6a504a280303a1299f859611e/docling_parse-7.19.1-cp314-cp314-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:122944340837997e2df6f8b50ffe7ac8338f393fa5a046f278dfd25d29d4077a", size = 10364695, upload-time = "2026-09-11T10:48:25.487Z" },
-    { url = "https://files.pythonhosted.org/packages/db/92/a204ac5c6e0adfd85f55ccb46e3ea3f853929c88f649a805515bb94d0184/docling_parse-7.19.1-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:504e9b79d71e13784a4fea5208297fedd9d384e24744224f321592121cf7f9c9", size = 10768512, upload-time = "2026-09-11T10:48:28.121Z" },
-    { url = "https://files.pythonhosted.org/packages/9a/f5/fa2963c1666983e98d4211ba37a97ba2c4fbb06d86999d38a8f00b8cf1e8/docling_parse-7.19.1-cp314-cp314-win_amd64.whl", hash = "sha256:e93fa83fe58b56b9d87c4624c59a3beaf52868b59d313c0e1eda5d5bc929e801", size = 12247121, upload-time = "2026-09-11T10:48:30.736Z" },
-    { url = "https://files.pythonhosted.org/packages/cf/92/0830120a19d0c7b59a9722063e3353009cdb975f5dfb7e2001583f31765e/docling_parse-7.19.1-cp314-cp314-win_arm64.whl", hash = "sha256:fa6ffc4835a3f289947ab3e80e4f7737fd1859e1f36406d446ac28e422436bc2", size = 9456143, upload-time = "2026-09-11T10:48:33.185Z" },
+    { url = "https://files.pythonhosted.org/packages/af/a5/a65a5cb28d5694656e4bbddd9b37905e6321edf33d1746d6cf680487f7cf/docling_parse-7.22.3-cp310-cp310-macosx_14_0_arm64.whl", hash = "sha256:c3604408e313f9b0319892926abcbb5722e24170ed30df9d17169ba498223178", size = 9875746, upload-time = "2026-10-13T04:23:36.767Z" },
+    { url = "https://files.pythonhosted.org/packages/f5/9a/4568fe897b5fd22bda3e2377ae05931b3c9f8159314cbe323e2b963d83fe/docling_parse-7.22.3-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:64d1310dccd9c74123c3337bea1e45d1bc9f804a59053fc2d7027596acc8b967", size = 10464081, upload-time = "2026-10-13T04:23:39.19Z" },
+    { url = "https://files.pythonhosted.org/packages/8d/67/37718deeea31a7e5eae72780a9df070fc3522fdf23d70b22f41df74d75a0/docling_parse-7.22.3-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:40c86c1b421c7dbf94f1ee19e79d7d799fa80b4489fbd7854f98269ee91153a1", size = 10738227, upload-time = "2026-10-13T04:23:41.498Z" },
+    { url = "https://files.pythonhosted.org/packages/c4/e5/f45eaf5073dfd914a839f46fc57760b8a71fefe718b55819b57ae69b3cd4/docling_parse-7.22.3-cp310-cp310-win_amd64.whl", hash = "sha256:8605e66b15ee16d68beaee5256712d4ecadcf4590f875b4e00320feae0ac15e6", size = 11884476, upload-time = "2026-10-13T04:23:43.921Z" },
+    { url = "https://files.pythonhosted.org/packages/95/88/ab0e4aecc4c872b6916b8d7a13cd3463440d7dc30db81706774493cb2e8d/docling_parse-7.22.3-cp310-cp310-win_arm64.whl", hash = "sha256:d42de08e466309f6ad59c8cca57fae786a04ee049887e936226851ab29c24fce", size = 9274387, upload-time = "2026-10-13T04:23:46.516Z" },
+    { url = "https://files.pythonhosted.org/packages/1a/fe/2c44f2cbf53cd92df2f4d6b8f164ea9db51697d3a08cb0f2e5644c2c474f/docling_parse-7.22.3-cp311-cp311-macosx_14_0_arm64.whl", hash = "sha256:b4fc882e1140b5840cd9cf9f4bcfcd97f85eaf5176afd46b7333a08e7157ac42", size = 9877622, upload-time = "2026-10-13T04:23:48.891Z" },
+    { url = "https://files.pythonhosted.org/packages/13/d8/28d1fa75243313369a4a373a7face52df36435a887eea298d7171ad749f2/docling_parse-7.22.3-cp311-cp311-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:cb7588e76ed2b7e91db831c958c504a228e2cb85df0efc4a2b214fb9ffe8b26a", size = 10437035, upload-time = "2026-10-13T04:23:51.3Z" },
+    { url = "https://files.pythonhosted.org/packages/5f/f5/0431610c9236fea34d5be57eb64e122aafd8e5ad9e750992f893777f5c4d/docling_parse-7.22.3-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:b2579037babaf9a413ef0f0c0bae7db32e597c428698b3a3078500d8147d215c", size = 10844125, upload-time = "2026-10-13T04:23:53.735Z" },
+    { url = "https://files.pythonhosted.org/packages/9a/03/2ae65325c7a6ee5f6136f5e4dc98e8225f771d5120aaf85fe2744b1e6f5c/docling_parse-7.22.3-cp311-cp311-win_amd64.whl", hash = "sha256:1bbec1af48794862e040ac26b37a9e47d865b47120c4c5310b8cbf2c6926e9f8", size = 11885453, upload-time = "2026-10-13T04:23:55.879Z" },
+    { url = "https://files.pythonhosted.org/packages/fa/99/6d25351d2be4dc66a4344ac80d25906b8388843f03825bcbc8d12238bb41/docling_parse-7.22.3-cp311-cp311-win_arm64.whl", hash = "sha256:926f92c9e593ece6771fb74ca721a7e930283fbf1e81adbc4f1c1eb7863ed6f2", size = 9275249, upload-time = "2026-10-13T04:23:57.93Z" },
+    { url = "https://files.pythonhosted.org/packages/0d/2a/7620351e16be14c165b407062ce0cb62f4bfb82c016feaef2e2eee3e2244/docling_parse-7.22.3-cp312-cp312-macosx_14_0_arm64.whl", hash = "sha256:2df4e5fda5e27392a1dd1a2f0c90e6101ed5c159e9f886ef76c4cd7a7f9fbfdd", size = 9879311, upload-time = "2026-10-13T04:23:59.969Z" },
+    { url = "https://files.pythonhosted.org/packages/23/88/8dc36225fea4d3211f60039392986cb15062dbfa2771cc5cdd5ecc747aa5/docling_parse-7.22.3-cp312-cp312-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:e936ead174ab0b3e21cfbb3812bc0179d136d3acf32bc335374fc94e433247af", size = 10441366, upload-time = "2026-10-13T04:24:02.361Z" },
+    { url = "https://files.pythonhosted.org/packages/9d/56/e66b6990912f39e149098860b42ca2d259437f52234eef8e73444145da87/docling_parse-7.22.3-cp312-cp312-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:d72d60fb81817ea08134dfc09eaf34d0dd3242fba4461a668e12a6636018e5da", size = 10848678, upload-time = "2026-10-13T04:24:04.454Z" },
+    { url = "https://files.pythonhosted.org/packages/34/17/1037162acaeaf1247bfadcdf888b64c90e49d929c5a1a2c702a383052b1a/docling_parse-7.22.3-cp312-cp312-win_amd64.whl", hash = "sha256:f8957f88deec0c8fc010c664df297197bb98fc04ae7e63d66e65704ebcbdaa69", size = 11890707, upload-time = "2026-10-13T04:24:06.72Z" },
+    { url = "https://files.pythonhosted.org/packages/08/e7/46be5fa297521f225c32ffc61b61487fff663b881a5aa17585d5d5b908f1/docling_parse-7.22.3-cp312-cp312-win_arm64.whl", hash = "sha256:1e55c0dc5c000ea15b76d67e5151be9010a7100432f6baec439ab36665300b6b", size = 9275488, upload-time = "2026-10-13T04:24:09.007Z" },
+    { url = "https://files.pythonhosted.org/packages/67/1e/9f3368114c621db0f0a1eb5caac6a50ba20fd00f041015d91ba850d670b9/docling_parse-7.22.3-cp313-cp313-macosx_14_0_arm64.whl", hash = "sha256:ac8e20c99bde5ad7c4ff17ed96cdbf6b0f5c3c3f932889c42c2029b3d0ddf04c", size = 9879471, upload-time = "2026-10-13T04:24:10.893Z" },
+    { url = "https://files.pythonhosted.org/packages/a3/f2/0cc656170ae7e5069037f7befdd8d46ca428c6315c855455732feeb86e76/docling_parse-7.22.3-cp313-cp313-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:b1af327b0ec1621d2d78e3ef45a81ddd37c688fdbdcb8c7088d94244db9fa580", size = 10441280, upload-time = "2026-10-13T04:24:13.254Z" },
+    { url = "https://files.pythonhosted.org/packages/e5/2b/5fbcdd90bb24b42fa9904d5f2fd5ba09fe7a8dd8a45b3421a4bb7c1dd4ae/docling_parse-7.22.3-cp313-cp313-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:42cb068b6094f4deadb6e77e0b62cb7c2f64826f937d2affd5ae303603b07988", size = 10848681, upload-time = "2026-10-13T04:24:15.954Z" },
+    { url = "https://files.pythonhosted.org/packages/14/9b/84f9e4c329bdc6ee3107e5149c102652ea10089dde899a6d5447150c44b0/docling_parse-7.22.3-cp313-cp313-win_amd64.whl", hash = "sha256:604e1938653e05249217ad6e810f821c18d56b95611040b125d531a2d1c7147d", size = 11890814, upload-time = "2026-10-13T04:24:18.201Z" },
+    { url = "https://files.pythonhosted.org/packages/12/b0/2b6ab89e89a3454222a77441b36f3691d64410d293bdf9e06d34e7cc1175/docling_parse-7.22.3-cp313-cp313-win_arm64.whl", hash = "sha256:2003cebdbbb5e22dbb3cdc206cbe7f489d3da2b0ef7fafa0498dc6470aa8f62b", size = 9275555, upload-time = "2026-10-13T04:24:20.533Z" },
+    { url = "https://files.pythonhosted.org/packages/1d/c2/3d90b27327b2b9cf575dbf9a7cd3d7be3ee8aaeb802ae29bfeedcb6e302f/docling_parse-7.22.3-cp314-cp314-macosx_14_0_arm64.whl", hash = "sha256:ff4944d8122902a938c361e3a860eefaedececd286812b9c3130475c28862268", size = 9879558, upload-time = "2026-10-13T04:24:22.434Z" },
+    { url = "https://files.pythonhosted.org/packages/13/45/9a4be8a808f14a30f23c57a19a1f842ac7500a3bed37bdad1457baa3156e/docling_parse-7.22.3-cp314-cp314-manylinux_2_26_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:3b363a03a141b77d0726ed81241a492a65d4daa6c716d883142187b4b9205abf", size = 10443099, upload-time = "2026-10-13T04:24:24.49Z" },
+    { url = "https://files.pythonhosted.org/packages/35/cb/e29bfb3ffd9c64970ec24acbc7cb7651d2d9f586782ff22cd88a38748d4d/docling_parse-7.22.3-cp314-cp314-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:d6afe9d92372b2ed60a6965b6494d634ab4929372d43df02fdf8fc21a00eb6ae", size = 10849090, upload-time = "2026-10-13T04:24:27.41Z" },
+    { url = "https://files.pythonhosted.org/packages/e2/6d/7796d8a7cf6c9b5ce55cef8cd2e2578635f8bfbe99965dbc56ac3f839cbc/docling_parse-7.22.3-cp314-cp314-win_amd64.whl", hash = "sha256:5baa7bb0a449ad14c46124dcc7beae5c397c682b83e31087833c194283d8b6b2", size = 12329254, upload-time = "2026-10-13T04:24:29.642Z" },
+    { url = "https://files.pythonhosted.org/packages/48/d2/9b811d44785b25e2455c26f9158b39bd5bda8ff77fb9800efe8a486d2259/docling_parse-7.22.3-cp314-cp314-win_arm64.whl", hash = "sha256:43aadf6a36e8da863811d39c0c74da81fee11a13a2756d0ff0db1a78074bff9b", size = 9653345, upload-time = "2026-10-13T04:24:31.775Z" },
 ]
 
 [[package]]
 name = "docling-slim"
-version = "2.126.0"
+version = "2.132.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "certifi" },
     { name = "docling-core" },
     { name = "filetype" },
+    { name = "langcodes" },
     { name = "pluggy" },
     { name = "pydantic" },
     { name = "pydantic-settings" },
     { name = "requests", version = "2.34.2", source = { registry = "https://pypi.org/simple" } },
     { name = "tqdm" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/99/6b/25bc667ab933ab52e211f8486f01996badef2797d39ece37e31776f3edf0/docling_slim-2.126.0.tar.gz", hash = "sha256:f965e5d6289e444015f452f051e1562eb1da637002d66b350a5bc308d198524a", size = 653931, upload-time = "2026-09-04T15:56:06.841Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/05/bc/c6ddf2589ca55f3fcdd560669027227d09f34a27d3a83e0b041b9e40ae49/docling_slim-2.132.0.tar.gz", hash = "sha256:6970f2d17a3b5bac67cd44ff2705789e6b3cbbdb6366ca1a660dae39f566c27a", size = 772568, upload-time = "2026-10-01T09:45:47.623Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/52/b0/65bdbaba0056323f302236c89877e210d5e301a2e863e35ba661118aad90/docling_slim-2.126.0-py3-none-any.whl", hash = "sha256:4853c1efec9b038b2593bb2d45f8fdc0f466219b069e83de6893ac7c285a413e", size = 814745, upload-time = "2026-09-04T15:56:04.919Z" },
+    { url = "https://files.pythonhosted.org/packages/d3/b4/338f066c44dca51fe0c7b39b516c3e39a672e647a548d69067ddf6c89621/docling_slim-2.132.0-py3-none-any.whl", hash = "sha256:a1977f7116bc03872c5b763278fcc8c6b7b070a4bc1e11942b771b509071e835", size = 948896, upload-time = "2026-10-01T09:45:45.428Z" },
 ]
 
 [package.optional-dependencies]
@@ -950,7 +952,7 @@ name = "exceptiongroup"
 version = "1.3.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.13' or (extra == 'group-23-docling-ingest-pipeline-convert' and extra == 'group-23-docling-ingest-pipeline-image') or (extra == 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local')" },
+    { name = "typing-extensions", marker = "python_full_version < '3.11' or (extra == 'group-23-docling-ingest-pipeline-convert' and extra == 'group-23-docling-ingest-pipeline-image') or (extra == 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/50/79/66800aadf48771f6b62f7eb014e352e5d06856655206165d775e675a02c9/exceptiongroup-1.3.1.tar.gz", hash = "sha256:8b412432c6055b0b7d14c310000ae93352ed6754f70fa8f7c34141f91c4e3219", size = 30371, upload-time = "2025-11-21T23:01:54.787Z" }
 wheels = [
@@ -1354,6 +1356,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/19/74/a633ee74eb36c44aa6d1095e7cc5569bebf04342ee146178e2d36600708b/jsonschema_specifications-2025.9.1.tar.gz", hash = "sha256:b540987f239e745613c7a9176f3edb72b832a4ac465cf02712288397832b5e8d", size = 32855, upload-time = "2025-09-08T01:34:59.186Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/41/45/1a4ed80516f02155c51f51e8cedb3c1902296743db0bbc66608a0db2814f/jsonschema_specifications-2025.9.1-py3-none-any.whl", hash = "sha256:98802fee3a11ee76ecaca44429fda8a41bff98b00a0f2838151b113f210cc6fe", size = 18437, upload-time = "2025-09-08T01:34:57.871Z" },
+]
+
+[[package]]
+name = "langcodes"
+version = "3.5.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/a9/75/f9edc5d72945019312f359e69ded9f82392a81d49c5051ed3209b100c0d2/langcodes-3.5.1.tar.gz", hash = "sha256:40bff315e01b01d11c2ae3928dd4f5cbd74dd38f9bd912c12b9a3606c143f731", size = 191084, upload-time = "2025-12-02T16:22:01.627Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/dd/c1/d10b371bcba7abce05e2b33910e39c33cfa496a53f13640b7b8e10bb4d2b/langcodes-3.5.1-py3-none-any.whl", hash = "sha256:b6a9c25c603804e2d169165091d0cdb23934610524a21d226e4f463e8e958a72", size = 183050, upload-time = "2025-12-02T16:21:59.954Z" },
 ]
 
 [[package]]
@@ -2037,7 +2048,7 @@ name = "nvidia-cublas"
 version = "13.1.1.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cuda-nvrtc" },
+    { name = "nvidia-cuda-nvrtc", marker = "(python_full_version < '3.11' and sys_platform == 'emscripten') or (python_full_version < '3.11' and sys_platform == 'win32') or (sys_platform != 'emscripten' and sys_platform != 'win32')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/a7/a1/0bd24ee8c8d03adac032fd2909426a00c88f8c57961b1277ded97f91119f/nvidia_cublas-13.1.1.3-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:b7a210458267ac818974c53038fbec2e969d5c99f305ab15c72522fa9f001dd5", size = 542848918, upload-time = "2026-04-08T18:46:22.985Z" },
@@ -2080,7 +2091,7 @@ name = "nvidia-cudnn-cu13"
 version = "9.24.0.43"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cublas" },
+    { name = "nvidia-cublas", marker = "(python_full_version < '3.11' and sys_platform == 'emscripten') or (python_full_version < '3.11' and sys_platform == 'win32') or (sys_platform != 'emscripten' and sys_platform != 'win32')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ca/30/7c257e3d5cb4fecb147b93895c66e29c93f8e76d74b45bb418ff0587c4ec/nvidia_cudnn_cu13-9.24.0.43-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:a6812a554a1ff0413e9c52b84c26c050380649ab9615f9c16bded368ce9f421f", size = 650976863, upload-time = "2026-07-02T16:23:39.248Z" },
@@ -2093,7 +2104,7 @@ name = "nvidia-cufft"
 version = "12.0.0.61"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-nvjitlink" },
+    { name = "nvidia-nvjitlink", marker = "(python_full_version < '3.11' and sys_platform == 'emscripten') or (python_full_version < '3.11' and sys_platform == 'win32') or (sys_platform != 'emscripten' and sys_platform != 'win32')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8b/ae/f417a75c0259e85c1d2f83ca4e960289a5f814ed0cea74d18c353d3e989d/nvidia_cufft-12.0.0.61-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:2708c852ef8cd89d1d2068bdbece0aa188813a0c934db3779b9b1faa8442e5f5", size = 214053554, upload-time = "2025-09-04T08:31:38.196Z" },
@@ -2125,9 +2136,9 @@ name = "nvidia-cusolver"
 version = "12.0.4.66"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-cublas" },
-    { name = "nvidia-cusparse" },
-    { name = "nvidia-nvjitlink" },
+    { name = "nvidia-cublas", marker = "(python_full_version < '3.11' and sys_platform == 'emscripten') or (python_full_version < '3.11' and sys_platform == 'win32') or (sys_platform != 'emscripten' and sys_platform != 'win32')" },
+    { name = "nvidia-cusparse", marker = "(python_full_version < '3.11' and sys_platform == 'emscripten') or (python_full_version < '3.11' and sys_platform == 'win32') or (sys_platform != 'emscripten' and sys_platform != 'win32')" },
+    { name = "nvidia-nvjitlink", marker = "(python_full_version < '3.11' and sys_platform == 'emscripten') or (python_full_version < '3.11' and sys_platform == 'win32') or (sys_platform != 'emscripten' and sys_platform != 'win32')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c8/c3/b30c9e935fc01e3da443ec0116ed1b2a009bb867f5324d3f2d7e533e776b/nvidia_cusolver-12.0.4.66-py3-none-manylinux_2_27_aarch64.whl", hash = "sha256:02c2457eaa9e39de20f880f4bd8820e6a1cfb9f9a34f820eb12a155aa5bc92d2", size = 223467760, upload-time = "2025-09-04T08:33:04.222Z" },
@@ -2140,7 +2151,7 @@ name = "nvidia-cusparse"
 version = "12.6.3.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "nvidia-nvjitlink" },
+    { name = "nvidia-nvjitlink", marker = "(python_full_version < '3.11' and sys_platform == 'emscripten') or (python_full_version < '3.11' and sys_platform == 'win32') or (sys_platform != 'emscripten' and sys_platform != 'win32')" },
 ]
 wheels = [
     { url = "https://files.pythonhosted.org/packages/f8/94/5c26f33738ae35276672f12615a64bd008ed5be6d1ebcb23579285d960a9/nvidia_cusparse-12.6.3.3-py3-none-manylinux2014_aarch64.manylinux_2_17_aarch64.whl", hash = "sha256:80bcc4662f23f1054ee334a15c72b8940402975e0eab63178fc7e670aa59472c", size = 162155568, upload-time = "2025-09-04T08:33:42.864Z" },
@@ -3808,38 +3819,38 @@ resolution-markers = [
     "python_full_version >= '3.14' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and extra != 'group-23-docling-ingest-pipeline-convert' and extra == 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and extra != 'group-23-docling-ingest-pipeline-convert' and extra == 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
-    "python_full_version == '3.11.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and extra != 'group-23-docling-ingest-pipeline-convert' and extra == 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version >= '3.12' and python_full_version < '3.14' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra == 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and extra != 'group-23-docling-ingest-pipeline-convert' and extra == 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform == 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform == 'emscripten' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
+    "python_full_version == '3.11.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra == 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version == '3.11.*' and sys_platform == 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version == '3.11.*' and sys_platform == 'emscripten' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
     "python_full_version == '3.11.*' and sys_platform != 'emscripten' and sys_platform != 'win32' and extra != 'group-23-docling-ingest-pipeline-convert' and extra != 'group-23-docling-ingest-pipeline-image' and extra != 'group-23-docling-ingest-pipeline-local'",
