@@ -4,7 +4,8 @@
 #     curl -L ibm.biz/txc26-1499-bootstrap | bash -
 #
 # It fetches the lab, installs uv, creates the Python virtual environment, and
-# leaves you ready to fill in your .env file. It is safe to run again: a second
+# leaves you ready to fill in your .env file. The shared watsonx.ai credentials,
+# if the instructors put them in ~/lab-1499-watsonx.txt, go into .env for you. It is safe to run again: a second
 # run updates the checkout and leaves an existing .env alone.
 #
 # It runs under a pipe, so stdin is the script itself and a plain `read` would
@@ -242,6 +243,40 @@ create_venv() {
     || die "uv pip install failed"
 }
 
+# --- 6. the shared watsonx.ai credentials ------------------------------------
+# Track B's watsonx.ai key and project are shared by the class. The instructors
+# write them to every VM before the lab, outside the checkout so that no re-run
+# and no git pull touches them, as plain KEY=value lines a student can also open
+# with a double-click. They are copied into .env only where .env still has no
+# value or the .env.example placeholder: a value the student set wins.
+WX_FILE="${LAB_WX_FILE:-$HOME/lab-1499-watsonx.txt}"
+
+merge_watsonx() {
+  local env="$1" line key value current added=()
+  [[ -f "$WX_FILE" && -f "$env" ]] || return 0
+  # An .env without a final newline would glue an appended line to its last one.
+  [[ -s "$env" && -n "$(tail -c1 "$env")" ]] && printf '\n' >> "$env"
+  while IFS= read -r line || [[ -n "$line" ]]; do
+    line="${line%$'\r'}"
+    [[ "$line" =~ ^[[:space:]]*(WX_[A-Z_]+)=(.*)$ ]] || continue
+    key="${BASH_REMATCH[1]}"
+    value="${BASH_REMATCH[2]%"${BASH_REMATCH[2]##*[![:space:]]}"}"
+    [[ -n "$value" ]] || continue
+    current="$(grep -E "^$key=" "$env" | head -n1 | cut -d= -f2- || true)"
+    [[ -z "$current" || "$current" == your-* ]] || continue
+    if grep -qE "^$key=" "$env"; then
+      awk -v k="$key" -v v="$value" 'index($0, k "=") == 1 { print k "=" v; next } { print }' \
+        "$env" > "$env.tmp" && mv "$env.tmp" "$env"
+    else
+      printf '%s=%s\n' "$key" "$value" >> "$env"
+    fi
+    added+=("$key")
+  done < "$WX_FILE"
+  if [[ ${#added[@]} -gt 0 ]]; then
+    info "watsonx.ai credentials for Track B copied into .env from $WX_FILE"
+  fi
+}
+
 # --- go ----------------------------------------------------------------------
 printf '\n\033[1mLAB-1499 — Hands-On with Docling for IBM watsonx\033[0m\n'
 
@@ -276,6 +311,7 @@ elif [[ -f .env.example ]]; then
   cp .env.example .env
   info ".env created from .env.example — add your Service URL and API key"
 fi
+merge_watsonx .env
 
 printf '\n\033[1m✓ Ready.\033[0m\n\n'
 if [[ "$TMOUT_SYSTEM_CHANGED" == 1 ]]; then
