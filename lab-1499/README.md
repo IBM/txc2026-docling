@@ -83,7 +83,7 @@ The `lab-1499/docs` folder of the **Lab Repository** contains all the documents 
 |------|--------|----------------------|
 | `vantara_risk_disclosure.pdf` | PDF (4 pages) | Entity name, reporting period, reference number, total risk exposure, risk category table, capital ratios, **logo**, **3 data charts** |
 | `q3_audit_summary.docx` | DOCX (6 sections) | Material findings, sign-off date, confirms risk exposure and reference number |
-| `regulatory_guidelines_2025.epub` | EPUB (7 chapters) | Key regulatory obligations, AML requirements, reporting deadlines |
+| `regulatory_guidelines_2026.epub` | EPUB (7 chapters) | Key regulatory obligations, AML requirements, reporting deadlines |
 | `compliance_assessment_form.json` | JSON | Empty form template — filled at the end of both tracks |
 | `docling_lab.ipynb` | IPYNB | Notebook for Track B |
 
@@ -211,7 +211,7 @@ The **Compliance Assessment Form** (`docs/compliance_assessment_form.json`) defi
 |-------|----------|
 | `entity_name`, `reporting_period`, `total_risk_exposure_usd`, `highest_risk_category`, `regulator_reference_number` | `vantara_risk_disclosure.pdf` |
 | `material_findings` (list), `sign_off_date` | `q3_audit_summary.docx` |
-| `key_obligations` (list) | `regulatory_guidelines_2025.epub` |
+| `key_obligations` (list) | `regulatory_guidelines_2026.epub` |
 
 The spread is deliberate. Two of the fields — the risk exposure and the regulator's reference number — appear in **two** documents, which is what lets you check one against the other.
 
@@ -221,7 +221,7 @@ The spread is deliberate. Two of the fields — the risk exposure and the regula
 
 #### A.1 Check the Connection
 
-In the terminal from section [3.1](#31-set-up-the-lab), activate the environment the bootstrap created and run the provided check. It converts `docs/regulatory_guidelines_2025.epub` and prints the first lines of the resulting Markdown — confirming that the service URL is reachable, the API key is valid, and conversion is working end-to-end:
+In the terminal from section [3.1](#31-set-up-the-lab), activate the environment the bootstrap created and run the provided check. It converts `docs/regulatory_guidelines_2026.epub` and prints the first lines of the resulting Markdown — confirming that the service URL is reachable, the API key is valid, and conversion is working end-to-end:
 
 ```bash
 cd ~/txc2026-docling/lab-1499
@@ -233,7 +233,7 @@ A successful run looks like:
 
 ```
 Connecting to: https://<your-service-url>
-Converting:    regulatory_guidelines_2025.epub
+Converting:    regulatory_guidelines_2026.epub
 
 ✓ Connection successful!
 
