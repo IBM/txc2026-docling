@@ -7,6 +7,11 @@
 #   push to main  -> main-<short sha>
 #   tag vX.Y.Z    -> X.Y.Z, X.Y, and latest
 # `latest` therefore always points at the last release, never at main.
+#
+# Every tag is a linux/amd64 + linux/arm64 index. Each architecture builds on
+# its own native runner and is pushed by digest; the `merge` job then tags one
+# index over both. Native, not qemu: on arm64 the pipeline image compiles
+# pemja from source (it has no aarch64 wheel), which under emulation is slow.
 name: lab-2775 images
 
 on:
@@ -31,19 +36,23 @@ permissions:
   contents: read
   packages: write
 
+env:
+  # A PR from a fork gets a read-only token: build, but do not push.
+  PUSH: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.platform.runner }}
     strategy:
       fail-fast: false
       matrix:
         image: [pipeline, trigger]
+        platform:
+          - { arch: amd64, runner: ubuntu-24.04 }
+          - { arch: arm64, runner: ubuntu-24.04-arm }
     defaults:
       run:
         working-directory: lab-2775
-    env:
-      # A PR from a fork gets a read-only token: build, but do not push.
-      PUSH: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
     steps:
       - uses: actions/checkout@v7
 
@@ -65,6 +74,65 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      # Labels only; the tags are applied to the index in `merge`.
+      - id: meta
+        uses: docker/metadata-action@v6
+        with:
+          images: ${{ env.IMAGE }}
+
+      - id: build
+        uses: docker/build-push-action@v7
+        with:
+          context: lab-2775
+          file: lab-2775/images/${{ matrix.image }}.Dockerfile
+          platforms: linux/${{ matrix.platform.arch }}
+          labels: ${{ steps.meta.outputs.labels }}
+          outputs: type=image,name=${{ env.IMAGE }},push-by-digest=true,name-canonical=true,push=${{ env.PUSH }}
+          cache-from: type=gha,scope=lab-2775-${{ matrix.image }}-${{ matrix.platform.arch }}
+          cache-to: type=gha,mode=max,scope=lab-2775-${{ matrix.image }}-${{ matrix.platform.arch }}
+
+      - name: Export digest
+        if: env.PUSH == 'true'
+        run: |
+          mkdir -p "$RUNNER_TEMP/digests"
+          touch "$RUNNER_TEMP/digests/${DIGEST#sha256:}"
+        env:
+          DIGEST: ${{ steps.build.outputs.digest }}
+
+      - uses: actions/upload-artifact@v7
+        if: env.PUSH == 'true'
+        with:
+          name: digests-${{ matrix.image }}-${{ matrix.platform.arch }}
+          path: ${{ runner.temp }}/digests/*
+          if-no-files-found: error
+          retention-days: 1
+
+  merge:
+    needs: build
+    if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        image: [pipeline, trigger]
+    steps:
+      - name: Image name
+        run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY,,}/lab-2775-${{ matrix.image }}" >> "$GITHUB_ENV"
+
+      - uses: actions/download-artifact@v8
+        with:
+          path: ${{ runner.temp }}/digests
+          pattern: digests-${{ matrix.image }}-*
+          merge-multiple: true
+
+      - uses: docker/setup-buildx-action@v4
+
+      - uses: docker/login-action@v4
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - id: meta
         uses: docker/metadata-action@v6
         with:
@@ -78,15 +146,13 @@ jobs:
             type=raw,value=latest,enable=${{ startsWith(github.ref, 'refs/tags/v') }}
             type=ref,event=branch,enable=${{ github.event_name == 'workflow_dispatch' && github.ref != 'refs/heads/main' }}
 
-      # linux/amd64 only: CMF and Code Engine both run amd64, and an arm64
-      # pipeline build compiles pemja from source under qemu.
-      - uses: docker/build-push-action@v7
-        with:
-          context: lab-2775
-          file: lab-2775/images/${{ matrix.image }}.Dockerfile
-          platforms: linux/amd64
-          push: ${{ env.PUSH == 'true' }}
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha,scope=lab-2775-${{ matrix.image }}
-          cache-to: type=gha,mode=max,scope=lab-2775-${{ matrix.image }}
+      - name: Create and push the multi-arch index
+        working-directory: ${{ runner.temp }}/digests
+        run: |
+          mapfile -t tags < <(jq -r '.tags[] | "-t", .' <<< "$DOCKER_METADATA_OUTPUT_JSON")
+          sources=()
+          for digest in *; do sources+=("$IMAGE@sha256:$digest"); done
+          docker buildx imagetools create "${tags[@]}" "${sources[@]}"
+
+      - name: Inspect
+        run: docker buildx imagetools inspect "$IMAGE:${{ steps.meta.outputs.version }}"
