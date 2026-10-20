@@ -45,7 +45,7 @@ jobs:
       # A PR from a fork gets a read-only token: build, but do not push.
       PUSH: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
 
       # GHCR image names must be lowercase; the org is "IBM".
       - name: Image name
@@ -56,9 +56,9 @@ jobs:
         if: matrix.image == 'pipeline'
         run: ./scripts/fetch_jars.sh
 
-      - uses: docker/setup-buildx-action@v3
+      - uses: docker/setup-buildx-action@v4
 
-      - uses: docker/login-action@v3
+      - uses: docker/login-action@v4
         if: env.PUSH == 'true'
         with:
           registry: ghcr.io
@@ -66,7 +66,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - id: meta
-        uses: docker/metadata-action@v5
+        uses: docker/metadata-action@v6
         with:
           images: ${{ env.IMAGE }}
           flavor: latest=false
@@ -80,7 +80,7 @@ jobs:
 
       # linux/amd64 only: CMF and Code Engine both run amd64, and an arm64
       # pipeline build compiles pemja from source under qemu.
-      - uses: docker/build-push-action@v6
+      - uses: docker/build-push-action@v7
         with:
           context: lab-2775
           file: lab-2775/images/${{ matrix.image }}.Dockerfile
