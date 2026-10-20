@@ -59,7 +59,8 @@ check_lab_vm() {
 
   warn "this does not look like a LAB-1499 VM:"
   for w in "${wrong[@]}"; do warn "  - $w"; done
-  warn "it may edit your shell startup files — run on a lab VM only."
+  warn "it installs packages, edits your shell startup files, and comments out"
+  warn "the system idle timeout if it can."
 
   if [[ -n "${LAB_FORCE:-}" ]]; then
     info "LAB_FORCE is set — continuing anyway"
@@ -73,7 +74,84 @@ check_lab_vm() {
   curl -L ibm.biz/txc26-1499-bootstrap | LAB_FORCE=1 bash -"
 }
 
-# --- 1. git, if it is missing and we can get it ------------------------------
+# --- 1. the idle timeout -----------------------------------------------------
+# RHEL's hardening baselines (CIS, STIG) drop a `readonly TMOUT=900` into
+# /etc/profile.d, and bash then exits after fifteen idle minutes — the
+# student's terminal window closes on its own while they are reading the guide
+# or watching the dashboard. `readonly` is the awkward part: no later
+# profile.d file and no ~/.bashrc can unset it again, so the declaration
+# itself has to be commented out, and that needs root. Where there is no root
+# there is still the ordinary, non-readonly case, which ~/.bashrc can undo.
+TMOUT_SYSTEM_CHANGED=0
+
+# Does this file set it? Our own lines are marked and do not count — the
+# `unset` below mentions TMOUT too, and a second run must not comment it out.
+# Written without a pipeline exit status: `grep -q` closing early would leave
+# pipefail looking at a SIGPIPE.
+has_tmout() { [[ -n "$(grep -E '^[^#]*TMOUT' "$1" 2>/dev/null | grep -v 'LAB-1499' || true)" ]]; }
+
+# Every startup file with a live TMOUT in it, one per line.
+tmout_files() {
+  local f
+  for f in /etc/profile /etc/bashrc /etc/profile.d/*.sh; do
+    [[ -f "$f" ]] || continue
+    has_tmout "$f" && printf '%s\n' "$f"
+  done
+  return 0
+}
+
+# Comment out the lines that mention it, keeping the original as .lab1499.bak.
+# Idempotent: a commented line, and anything of ours, is left alone.
+comment_out_tmout() {
+  local file="$1" sudo="${2:-}"
+  $sudo sed -E -i.lab1499.bak \
+    -e '/LAB-1499/b' \
+    -e '/^[[:space:]]*#/! s|^(.*TMOUT.*)$|# \1  # LAB-1499: this closed the terminal mid-lab|' \
+    "$file"
+}
+
+disable_tmout() {
+  local files=() f sudo=""
+
+  # The student's own files first: no root needed for these.
+  for f in "$HOME/.bashrc" "$HOME/.bash_profile" "$HOME/.profile"; do
+    if [[ -f "$f" ]] && has_tmout "$f"; then
+      comment_out_tmout "$f"
+      info "commented out TMOUT in $f"
+    fi
+  done
+  # And a belt-and-braces unset for whatever sets it that we did not find. It
+  # is a no-op when TMOUT is readonly, hence everything above.
+  local rc="$HOME/.bashrc" marker="# added by the LAB-1499 bootstrap — no idle timeout"
+  if ! grep -qF "$marker" "$rc" 2>/dev/null; then
+    printf '\n%s\nunset TMOUT 2>/dev/null || true  # LAB-1499\n' "$marker" >> "$rc"
+  fi
+
+  while IFS= read -r f; do files+=("$f"); done < <(tmout_files)
+  if [[ ${#files[@]} -eq 0 ]]; then
+    info "no system idle timeout here — your terminal will stay open"
+    return 0
+  fi
+
+  if [[ "$(id -u)" != "0" ]]; then
+    if sudo -n true 2>/dev/null; then
+      sudo="sudo -n"
+    else
+      warn "an idle timeout is set in ${files[*]} and this account cannot edit"
+      warn "it without a password. If a terminal window closes on its own during"
+      warn "the lab, that is why — reopen it and tell the instructor."
+      return 0
+    fi
+  fi
+
+  for f in "${files[@]}"; do
+    comment_out_tmout "$f" "$sudo"
+    info "commented out TMOUT in $f (original kept as $f.lab1499.bak)"
+  done
+  TMOUT_SYSTEM_CHANGED=1
+}
+
+# --- 2. git, if it is missing and we can get it ------------------------------
 have_git() { command -v git >/dev/null 2>&1; }
 
 install_git() {
@@ -96,7 +174,7 @@ install_git() {
   have_git
 }
 
-# --- 2. uv -------------------------------------------------------------------
+# --- 3. uv -------------------------------------------------------------------
 install_uv() {
   if command -v uv >/dev/null 2>&1; then
     info "uv $(uv --version | awk '{print $2}') is already installed"
@@ -117,7 +195,7 @@ ensure_path() {
   info "added ~/.local/bin to your PATH in ~/.bashrc"
 }
 
-# --- 3. the lab itself -------------------------------------------------------
+# --- 4. the lab itself -------------------------------------------------------
 fetch_with_git() {
   if [[ -d "$LAB_DIR/.git" ]]; then
     info "updating the existing checkout in $LAB_DIR"
@@ -149,7 +227,7 @@ fetch_with_curl() {
   warn "this is a download, not a clone: 'git pull' will not work here."
 }
 
-# --- 4. Python virtual environment -------------------------------------------
+# --- 5. Python virtual environment -------------------------------------------
 create_venv() {
   local lab="$1"
   if [[ -d "$lab/.venv" ]]; then
@@ -169,6 +247,9 @@ printf '\n\033[1mLAB-1499 — Hands-On with Docling for IBM watsonx\033[0m\n'
 
 step "This machine"
 check_lab_vm
+
+step "Terminal idle timeout"
+disable_tmout
 
 step "System packages"
 if install_git; then :; else warn "continuing without git"; fi
@@ -197,6 +278,11 @@ elif [[ -f .env.example ]]; then
 fi
 
 printf '\n\033[1m✓ Ready.\033[0m\n\n'
+if [[ "$TMOUT_SYSTEM_CHANGED" == 1 ]]; then
+  info "this terminal still carries the old idle timeout and will close on its"
+  info "own — open a fresh one before you start, and it will stay open."
+  printf '\n'
+fi
 cat <<NEXT
   Your lab is in:   $LAB
 
