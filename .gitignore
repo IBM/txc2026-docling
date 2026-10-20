@@ -312,3 +312,6 @@ pip-selfcheck.json
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode,python,virtualenv,emacs,vim
 
+
+# LAB-1499 notebook outputs
+lab-1499/output/
