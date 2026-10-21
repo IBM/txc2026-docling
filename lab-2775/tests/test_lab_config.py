@@ -312,3 +312,20 @@ def test_a_missing_include_is_named_as_such(cfg):
     problems = c.validate()
     assert any(p.startswith("include: workshop.yaml") for p in problems)
     assert any(p.startswith("student.id is empty") for p in problems)
+
+
+def test_the_fan_out_needs_no_lab_yaml(tmp_path, monkeypatch):
+    """The instructor's scripts pass --student and the environment, nothing else."""
+    for name in ("WS_ID", "WS_VARIANT", "WS_PREFIX", "SINK_TYPE"):
+        monkeypatch.delenv(name, raising=False)
+    for name, value in {
+        "KAFKA_BOOTSTRAP_SERVERS": "broker:9094", "KAFKA_API_KEY": "k", "KAFKA_API_SECRET": "s",
+        "CMF_URL": "https://cmf/cmf", "CMF_AUTH": "admin:pw", "PIPELINE_IMAGE": "icr.io/ns/img:1",
+        "WATSONX_PROJECT_ID": "p-1", "KAFKA_CA_LOCATION": str(labconfig.PROJECT_ROOT / "certs/root-ca.pem"),
+    }.items():
+        monkeypatch.setenv(name, value)
+    cfg = labconfig.load(tmp_path / "no-such-lab.yaml", student="7")
+    assert cfg.validate() == []
+    assert cfg.environ()["KAFKA_CHUNKS_TOPIC"] == "ws.07.chunks"
+    monkeypatch.delenv("CMF_AUTH")
+    assert any(p.startswith("cmf.auth is empty") for p in labconfig.load(tmp_path / "x", student="7").validate())

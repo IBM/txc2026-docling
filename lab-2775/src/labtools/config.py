@@ -452,7 +452,10 @@ class LabConfig:
                     problems.append(f"{name} is not set — standalone mode takes it from the environment")
             return problems
 
-        raw_id = _dig(self.raw, "student.id")
+        # Checked as resolved, not as written: the instructor's fan-out gives the
+        # id with --student and every other value through the environment, and
+        # has no lab.yaml at all. Asking the file alone refused all of it.
+        raw_id = self.student_id or _dig(self.raw, "student.id")
         if raw_id is None or str(raw_id).strip() == "":
             problems.append("student.id is empty — set your two-digit id (e.g. \"07\")")
         elif not re.fullmatch(r"\d{1,2}", str(raw_id).strip()):
@@ -461,13 +464,14 @@ class LabConfig:
         # With an include, these are the instructors' values, and the student
         # must be told so — not sent to type a Kafka secret into lab.yaml.
         theirs = f" (it comes from {self.included.name}: ask the instructor)" if self.included else ""
+        env = self.environ()
+        names = dict(MAPPING)
         for dotted, what in REQUIRED:
             if dotted == "student.id":
                 continue
-            if not str(_dig(self.raw, dotted) or "").strip():
+            if not str(env.get(names[dotted], "")).strip():
                 problems.append(f"{dotted} is empty — {what}{theirs}")
 
-        env = self.environ()
         for dotted, name, _fallback in CA_FILES:
             path = Path(env[name])
             if not path.is_file():
