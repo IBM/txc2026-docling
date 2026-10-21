@@ -18,7 +18,7 @@ MINIMAL = """
 student:
   id: "7"
   bucket_crn: ""
-  opensearch_password: "hunter2"
+  opensearch_password: "pw"
 kafka:
   bootstrap_servers: "broker:9094"
   api_key: "k"
@@ -243,3 +243,72 @@ def test_no_workbench_is_empty_rather_than_invented(service):
     """The callers fall back to the service URL, which at least identifies the
     deployment — a composed link to a host that does not exist would not."""
     assert labconfig.docling_workbench_url(service) == ""
+
+
+# --- include: the instructors' file for this VM ------------------------------
+WORKSHOP = """
+student:
+  id: "12"
+  opensearch_password: "pw"
+kafka:
+  bootstrap_servers: "site-b:9094"
+  api_key: "k"
+  api_secret: "s"
+cmf:
+  url: "https://cmf-b/cmf"
+  auth: "admin:pw"
+  image: "icr.io/ns/img:1"
+watsonx:
+  project_id: "p-b"
+opensearch:
+  hosts: "https://os:9200"
+"""
+
+STUDENT_ONLY = """
+include: workshop.yaml
+student:
+  bucket_crn: ""
+docling:
+  url: "https://api.example/x"
+  api_key: "dk"
+kafka:
+  ca_file: ./certs/root-ca.pem
+"""
+
+
+def test_the_included_file_supplies_the_workshop_values(cfg, tmp_path):
+    (tmp_path / "workshop.yaml").write_text(textwrap.dedent(WORKSHOP))
+    c = cfg(STUDENT_ONLY)
+    assert c.student_id == "12"
+    env = c.environ()
+    assert env["KAFKA_BOOTSTRAP_SERVERS"] == "site-b:9094"
+    assert env["CMF_URL"] == "https://cmf-b/cmf"
+    assert env["OPENSEARCH_USERNAME"] == "student12"
+    assert env["DOCLING_SERVICE_API_KEY"] == "dk"
+    # The section-level defaults the handout need not repeat.
+    assert env["KAFKA_SECURITY_PROTOCOL"] == "SASL_SSL"
+    assert env["CMF_ENVIRONMENT"] == "flink-env"
+    assert c.bucket_name == "txc26-ws-12-uploads"
+    assert c.validate() == []
+
+
+def test_a_blank_in_lab_yaml_does_not_hide_the_included_value(cfg, tmp_path):
+    """An old lab.yaml — the example's empty Kafka section — plus the include."""
+    (tmp_path / "workshop.yaml").write_text(textwrap.dedent(WORKSHOP))
+    c = cfg(STUDENT_ONLY + 'cmf:\n  url: ""\n  environment: ""\n')
+    env = c.environ()
+    assert env["CMF_URL"] == "https://cmf-b/cmf"
+    assert env["CMF_ENVIRONMENT"] == "flink-env"
+
+
+def test_what_the_student_does_set_wins(cfg, tmp_path):
+    (tmp_path / "workshop.yaml").write_text(textwrap.dedent(WORKSHOP))
+    c = cfg(STUDENT_ONLY.replace('  bucket_crn: ""', '  id: "3"'))
+    assert c.student_id == "03"
+
+
+def test_a_missing_include_is_named_as_such(cfg):
+    c = cfg(STUDENT_ONLY)
+    problems = c.validate()
+    assert any(p.startswith("include: workshop.yaml") for p in problems)
+    assert any(p.startswith("student.id is empty") for p in problems)

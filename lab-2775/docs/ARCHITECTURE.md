@@ -114,8 +114,17 @@ scripts something had to keep patching the path to reach them.
 `lab.yaml` is what a student edits. `labtools/config.py` turns it into the
 environment variables every component already reads — `pipeline.config`, the
 `FlinkApplication` descriptor, the TaskManager's own environment, the dashboard.
-Three layers, later winning: the defaults in that module, `lab.yaml`, then the
-process environment.
+Four layers, later winning: the defaults in that module, the file `lab.yaml`
+includes, `lab.yaml` itself where it is not blank, and then the process
+environment.
+
+The included file is `workshop.yaml`: the instructors' file for one VM
+(`~/lab-2775.yaml`), installed by the bootstrap through `labtools/handout.py`.
+It carries the student id, the OpenSearch password, and the endpoints and
+credentials of whichever of the workshop's Confluent clusters and IBM Cloud
+accounts that student was given, with the broker CA inline. The workshop runs
+more than one of each to spread the load, and none of the student-facing
+steps change with which one a VM is on.
 
 Everything per-student is **derived** from `student.id` and wins over the
 environment: the topics, the application name, the consumer group, the

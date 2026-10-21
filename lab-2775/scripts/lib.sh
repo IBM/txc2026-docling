@@ -28,9 +28,8 @@ lab_require_uv() {
 
 lab_require_config() {
   [[ -f lab.yaml ]] || {
-    echo "There is no lab.yaml here yet. Start from the example:" >&2
-    echo "    cp lab.yaml.example lab.yaml" >&2
-    echo "then fill in your student id and the values from Phase 1 and 2." >&2
+    echo "There is no lab.yaml here yet. Run the bootstrap again, which makes it:" >&2
+    echo "    curl -L ibm.biz/txc26-2775-bootstrap | bash -" >&2
     exit 2
   }
 }
@@ -96,9 +95,15 @@ lab_index_summary() {
   lab_head "Your OpenSearch index"
   lab_note "index" "$OPENSEARCH_INDEX" "create it with: ./setup.sh index"
   lab_note "user" "$OPENSEARCH_USERNAME" "yours alone — you may write ${OPENSEARCH_USERNAME}-* and nothing else"
-  lab_note "hosts" "${OPENSEARCH_HOSTS:-<not set — see lab.yaml>}"
+  lab_note "hosts" "${OPENSEARCH_HOSTS:-<not set — see workshop.yaml>}"
   lab_note "dimension" "${EMBEDDING_DIMENSION}" "must match $EMBEDDING_MODEL_ID"
   lab_note "sink" "${SINK_TYPE}" "the topic and the index, both"
+}
+
+# Who this VM says you are. Every other name printed after it follows from this.
+lab_student_summary() {
+  lab_head "You"
+  lab_note "student id" "$STUDENT_ID" "from workshop.yaml — every name below follows from it"
 }
 
 lab_bucket_summary() {

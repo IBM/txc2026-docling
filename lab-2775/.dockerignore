@@ -19,6 +19,7 @@
 # Kubernetes Secret, and the broker CA reaches Docling base64-encoded in the
 # subscription. So none of it belongs in a build context, let alone a layer.
 lab.yaml
+workshop.yaml
 certs/
 
 # Everything neither image COPYs.

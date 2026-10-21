@@ -4,8 +4,11 @@
 #     curl -L ibm.biz/txc26-2775-bootstrap | bash -
 #
 # It fetches the lab, installs uv, builds the two Python environments and
-# leaves you a lab.yaml to fill in. It is safe to run again: a second run
-# updates the checkout and leaves your lab.yaml alone.
+# leaves you a lab.yaml to fill in. The workshop's values for this VM — your
+# student id, your passwords, which cluster you are on — the instructors put
+# in ~/lab-2775.yaml, and this sets them up for you. It is safe to run again: a
+# second run updates the checkout, refreshes those values, and leaves your
+# lab.yaml alone.
 #
 # It runs under a pipe, so stdin is the script itself and a plain `read` would
 # swallow the rest of it. The one question it can ask — "this does not look
@@ -16,6 +19,7 @@
 #     curl -L ibm.biz/txc26-2775-bootstrap | LAB_DIR=~/somewhere bash -
 #     curl -L ibm.biz/txc26-2775-bootstrap | LAB_REF=some-branch bash -
 #     curl -L ibm.biz/txc26-2775-bootstrap | LAB_FORCE=1 bash -   # not a lab VM
+#     curl -L ibm.biz/txc26-2775-bootstrap | LAB_HANDOUT=~/other.yaml bash -
 #
 # The VM is a vanilla RHEL 9 with a desktop. Nearly everything needed is
 # already there — curl, tar and coreutils are in @core, Firefox comes with the
@@ -29,6 +33,7 @@ REPO_SLUG="${LAB_REPO_SLUG:-IBM/txc2026-docling}"
 REPO_REF="${LAB_REF:-main}"
 LAB_SUBDIR="lab-2775"
 LAB_DIR="${LAB_DIR:-$HOME/txc2026-docling}"
+HANDOUT="${LAB_HANDOUT:-$HOME/lab-2775.yaml}"
 
 step() { printf '\n\033[1m▸ %s\033[0m\n' "$*"; }
 info() { printf '  %s\n' "$*"; }
@@ -294,25 +299,25 @@ UV_PROJECT_ENVIRONMENT="$LAB/.venv-dashboard" \
   uv sync --frozen --quiet --no-default-groups --group dashboard
 
 step "Your configuration"
-# Never overwritten. A student who re-runs this after filling half of it in
-# must not lose that.
+# lab.yaml is never overwritten. A student who re-runs this after filling half
+# of it in must not lose that.
 if [[ -f lab.yaml ]]; then
   info "lab.yaml is already here — left untouched"
-elif [[ -f "$HOME/lab.yaml" ]]; then
-  # Pre-seeded with this class's values when the VM was handed out.
-  cp "$HOME/lab.yaml" lab.yaml
-  info "lab.yaml taken from the one prepared on this VM"
-elif [[ -n "${LAB_CONFIG:-}" && -f "$LAB_CONFIG" ]]; then
-  cp "$LAB_CONFIG" lab.yaml
-  info "lab.yaml taken from $LAB_CONFIG"
 else
   cp lab.yaml.example lab.yaml
-  info "lab.yaml created from the example — it needs filling in"
+  info "lab.yaml created from the example"
 fi
-# The broker CA, if the VM was handed one.
-if [[ ! -f certs/kafka-ca.crt && -f "$HOME/kafka-ca.crt" ]]; then
-  cp "$HOME/kafka-ca.crt" certs/kafka-ca.crt
-  info "broker CA taken from the one prepared on this VM"
+# The instructors' file for this VM is the opposite: it is theirs, so it is
+# installed again on every run — re-sending it and re-running this is how a
+# rotated credential reaches a VM mid-class. labtools.handout copies it to
+# workshop.yaml, writes the broker CA out of it, and makes lab.yaml include it;
+# Python rather than bash because the CA is a block of YAML.
+if [[ -f "$HANDOUT" ]]; then
+  uv run --frozen --quiet python -m labtools.handout "$HANDOUT" || \
+    warn "could not use $HANDOUT — tell the instructor"
+else
+  warn "no $HANDOUT on this VM, so lab.yaml has no workshop values yet."
+  warn "Tell the instructor; once it is there, run this bootstrap again."
 fi
 
 printf '\n\033[1m✓ Ready.\033[0m\n\n'
@@ -325,8 +330,8 @@ cat <<NEXT
   Your lab is in:   $LAB
 
   1  cd $LAB
-  2  open lab.yaml and fill in what is marked YOU
-  3  ./setup.sh check
+  2  ./setup.sh info     your id, and the names the console steps ask for
+  3  the lab guide says when to fill in what lab.yaml marks YOU
 
   The lab guide has the rest. If this is a new terminal and the commands are
   not found, run:  export PATH="\$HOME/.local/bin:\$PATH"
