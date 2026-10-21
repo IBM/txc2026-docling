@@ -37,7 +37,9 @@ kind: FlinkApplication
 metadata:
   name: docling-chunk-enrich
 spec:
-  image: icr.io/txc26-dcls-dev/docling-ingest-pyflink:0.1.0
+  # Built by CI and public on GHCR, so no pull secret. Always an exact build:
+  # main-<sha> for a build of main, X.Y.Z for a release.
+  image: ghcr.io/ibm/txc2026-docling/lab-2775-pipeline:main-468e757
   imagePullPolicy: Always
   flinkVersion: v2_1
   serviceAccount: flink
@@ -72,8 +74,6 @@ spec:
     metadata:
       name: pod-template
     spec:
-      imagePullSecrets:
-        - name: txc26-dcls-dev-conflient-read-pull-secret
       containers:
         - name: flink-main-container
           env:
