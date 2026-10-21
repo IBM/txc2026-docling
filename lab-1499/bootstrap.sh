@@ -229,17 +229,19 @@ fetch_with_curl() {
 }
 
 # --- 5. Python virtual environment -------------------------------------------
+# The venv is created once; the packages are installed on every run, so a
+# re-run picks up packages added to the list and newer releases of the others.
 create_venv() {
   local lab="$1"
   if [[ -d "$lab/.venv" ]]; then
-    info "virtual environment already exists — left untouched"
-    return 0
+    info "virtual environment already exists — reusing it"
+  else
+    info "creating virtual environment with Python 3.14 ..."
+    uv venv --python 3.14 --quiet "$lab/.venv" \
+      || die "uv venv failed — check that uv can download Python (network access required)"
   fi
-  info "creating virtual environment with Python 3.14 ..."
-  uv venv --python 3.14 --quiet "$lab/.venv" \
-    || die "uv venv failed — check that uv can download Python (network access required)"
-  info "installing docling-client and dclq ..."
-  uv pip install --quiet --python "$lab/.venv/bin/python" "docling-client" "dclq" \
+  info "installing or upgrading docling-client and dclq ..."
+  uv pip install --quiet --upgrade --python "$lab/.venv/bin/python" "docling-client" "dclq" \
     || die "uv pip install failed"
 }
 
