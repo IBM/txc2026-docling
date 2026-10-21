@@ -7,12 +7,18 @@ dashboard resolves them. That contract is not changed here. What changes is the
 *human* end of it: a student edits YAML, and this module turns it into those
 variables.
 
-Three layers, later winning:
+Four layers, later winning:
 
 1. the defaults below — the resource envelope, the model ids, the names that
    are the same for every run of this lab;
-2. ``lab.yaml``;
-3. ``os.environ`` — which is how the instructor's fan-out feeds it: that
+2. the file ``lab.yaml`` names in its ``include:`` line — on the lab VM that is
+   ``workshop.yaml``, the instructors' file for this one VM (see
+   :mod:`labtools.handout`): the student id, the OpenSearch password, and which
+   of the workshop's clusters and accounts this student was given;
+3. ``lab.yaml`` — but only where it says something: an empty value there does
+   not hide the included one, so a ``lab.yaml`` still carrying the example's
+   blank Kafka section keeps working once it gains an ``include:``;
+4. ``os.environ`` — which is how the instructor's fan-out feeds it: that
    tooling is environment-based and sources its own file with ``set -a``.
 
 and then the per-student names, which are *derived* and never configured: a
@@ -73,6 +79,18 @@ DEFAULTS: dict[str, str] = {
     # the index is what the Ask tab retrieves from. A student who had to choose
     # would only ever see half of the lab.
     "SINK_TYPE": "kafka,opensearch",
+    # Kafka as the VM sees it. The same on both of the workshop's clusters, so
+    # workshop.yaml need not say.
+    "KAFKA_SECURITY_PROTOCOL": "SASL_SSL",
+    "KAFKA_SASL_MECHANISM": "PLAIN",
+    "CMF_ENVIRONMENT": "flink-env",
+    # Where the bucket goes and what it is suggested to be called. Bucket names
+    # are global across IBM Cloud, so the template is a suggestion only (see
+    # LabConfig.bucket_name).
+    "COS_BUCKET_REGION": "ca-tor",
+    "WS_BUCKET_TEMPLATE": "txc26-ws-{id}-uploads",
+    # The shared trigger app the student subscribes their bucket to.
+    "CODE_ENGINE_APP": "docling-trigger",
     # Kafka as a pod inside the cluster sees it — not as the laptop does.
     "CMF_KAFKA_BOOTSTRAP": "kafka.confluent.svc.cluster.local:9071",
     "CMF_KAFKA_SECURITY_PROTOCOL": "PLAINTEXT",
@@ -183,6 +201,8 @@ MAPPING: list[tuple[str, str]] = [
     ("opensearch.hosts", "OPENSEARCH_HOSTS"),
     ("cos.region", "COS_BUCKET_REGION"),
     ("cos.endpoint", "COS_ENDPOINT"),
+    ("cos.bucket_template", "WS_BUCKET_TEMPLATE"),
+    ("code_engine.app", "CODE_ENGINE_APP"),
 ]
 
 # The two CA files. Separate from MAPPING because their value is a path that has
@@ -263,6 +283,8 @@ class LabConfig:
     #: because in the fan-out the environment is *stale*: ws_student_env
     #: exports student 03's topics, and the next call would inherit them.
     standalone: bool = False
+    #: The file ``include:`` named, resolved — whether or not it exists.
+    included: Path | None = None
 
     # --- derived names ------------------------------------------------------
     @property
@@ -326,7 +348,7 @@ class LabConfig:
         crn = str(_dig(self.raw, "student.bucket_crn") or "")
         if ":bucket:" in crn:
             return crn.rsplit(":bucket:", 1)[1]
-        template = str(_dig(self.raw, "cos.bucket_template") or "")
+        template = str(_dig(self.raw, "cos.bucket_template") or self._setting("WS_BUCKET_TEMPLATE"))
         return template.replace("{id}", self.student_id) if template else ""
 
     def _setting(self, key: str) -> str:
@@ -352,8 +374,11 @@ class LabConfig:
 
         for dotted, name in MAPPING:
             value = _dig(self.raw, dotted)
-            if value is not None:
-                env[name] = "" if value is None else str(value)
+            # A blank is kept — an empty COS_BUCKET_CRN means something — but
+            # never in place of a default: an empty `security_protocol:` is a
+            # value nobody filled in, not a request for no TLS.
+            if value is not None and not (_blank(value) and name in DEFAULTS):
+                env[name] = str(value)
 
         for dotted, name, fallback in CA_FILES:
             value = str(_dig(self.raw, dotted) or fallback)
@@ -433,11 +458,14 @@ class LabConfig:
         elif not re.fullmatch(r"\d{1,2}", str(raw_id).strip()):
             problems.append(f"student.id must be a number like 07 (got {raw_id!r})")
 
+        # With an include, these are the instructors' values, and the student
+        # must be told so — not sent to type a Kafka secret into lab.yaml.
+        theirs = f" (it comes from {self.included.name}: ask the instructor)" if self.included else ""
         for dotted, what in REQUIRED:
             if dotted == "student.id":
                 continue
             if not str(_dig(self.raw, dotted) or "").strip():
-                problems.append(f"{dotted} is empty — {what}")
+                problems.append(f"{dotted} is empty — {what}{theirs}")
 
         env = self.environ()
         for dotted, name, _fallback in CA_FILES:
@@ -445,7 +473,8 @@ class LabConfig:
             if not path.is_file():
                 problems.append(
                     f"{dotted}: no file at {path} — the certificate authority that signed "
-                    "the brokers. Without it every TLS connection fails as a timeout."
+                    "the brokers. Without it every TLS connection fails as a timeout. "
+                    "On the lab VM the bootstrap writes it; run the bootstrap again."
                 )
 
         # A dimension that disagrees with the model is not caught until the
@@ -474,6 +503,49 @@ class LabConfig:
         return self
 
 
+def _read_yaml(path: Path) -> dict:
+    try:
+        import yaml
+    except ImportError:  # pragma: no cover - only without the local group
+        raise LabConfigError("pyyaml is not installed — run `uv sync`") from None
+    try:
+        loaded = yaml.safe_load(path.read_text()) or {}
+    except yaml.YAMLError as exc:
+        raise LabConfigError(f"{path} is not valid YAML:\n  {exc}") from None
+    if not isinstance(loaded, dict):
+        raise LabConfigError(f"{path}: expected a mapping at the top level")
+    return loaded
+
+
+def _blank(value) -> bool:
+    return value is None or (isinstance(value, str) and value.strip() == "")
+
+
+def merge(base: dict, over: dict) -> dict:
+    """``over`` on top of ``base``, section by section — except where ``over``
+    is blank.
+
+    That exception is what lets a ``lab.yaml`` carry the example's empty
+    ``kafka:`` section and still get the brokers from the included file: an
+    empty string there means "not filled in", never "deliberately nothing".
+    """
+    out = dict(base)
+    for key, value in over.items():
+        if isinstance(value, dict) and isinstance(out.get(key), dict):
+            out[key] = merge(out[key], value)
+        elif _blank(value):
+            out.setdefault(key, value)
+        else:
+            out[key] = value
+    return out
+
+
+def resolve_include(config_path: Path, include) -> Path:
+    """Where ``include:`` points: ``~`` expanded, relative to ``lab.yaml``."""
+    target = Path(os.path.expanduser(str(include).strip()))
+    return target if target.is_absolute() else config_path.parent / target
+
+
 def load(path: str | Path | None = None, *, student: str | None = None,
          variant: str | None = None, standalone: bool = False) -> LabConfig:
     """Read ``lab.yaml``.
@@ -485,16 +557,23 @@ def load(path: str | Path | None = None, *, student: str | None = None,
     cfg = LabConfig(standalone=standalone)
     cfg.path = Path(path) if path else DEFAULT_CONFIG
     if cfg.path.is_file():
-        try:
-            import yaml
-        except ImportError:  # pragma: no cover - only without the local group
-            raise LabConfigError("pyyaml is not installed — run `uv sync`") from None
-        try:
-            loaded = yaml.safe_load(cfg.path.read_text()) or {}
-        except yaml.YAMLError as exc:
-            raise LabConfigError(f"{cfg.path} is not valid YAML:\n  {exc}") from None
-        if not isinstance(loaded, dict):
-            raise LabConfigError(f"{cfg.path}: expected a mapping at the top level")
+        loaded = _read_yaml(cfg.path)
+        include = loaded.pop("include", None)
+        if not _blank(include):
+            cfg.included = resolve_include(cfg.path, include)
+            if cfg.included.is_file():
+                base = _read_yaml(cfg.included)
+                base.pop("include", None)  # one level, on purpose
+                loaded = merge(base, loaded)
+            else:
+                # A problem rather than an exception: `check` should list it
+                # beside the empty values it causes, which name the keys.
+                cfg.problems.append(
+                    f"include: {include} — there is no file at {cfg.included}. On the lab "
+                    "VM the bootstrap writes it from the file the instructors put in your "
+                    "home directory: run the bootstrap again. Off the VM, delete the line "
+                    "and fill the values in here."
+                )
         cfg.raw = loaded
 
     raw_id = student or os.environ.get("WS_ID") or _dig(cfg.raw, "student.id") or ""

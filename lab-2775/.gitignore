@@ -1,6 +1,8 @@
-# Your own configuration and the broker CA the instructor hands out. Both are
-# per-student, and lab.yaml holds your OpenSearch password.
+# Your own configuration, and what the bootstrap writes from the instructors'
+# file for this VM: workshop.yaml (your password, the Kafka secret) and the
+# broker CA that came inline in it.
 lab.yaml
+workshop.yaml
 certs/kafka-ca.crt
 
 # Virtualenvs. The dashboard gets its own so a Streamlit upgrade can never move

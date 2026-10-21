@@ -10,8 +10,8 @@
 # in the IBM Cloud console, in an account this script is not logged in to.
 # `info` prints exactly what to type into those two forms.
 #
-# Your id comes from `student.id` in lab.yaml. Everything else you own is
-# derived from it.
+# Your id comes from `student.id` in workshop.yaml, the instructors' file for
+# this VM, which lab.yaml includes. Everything else you own is derived from it.
 
 . "$(dirname "$0")/scripts/lib.sh"
 
@@ -29,7 +29,8 @@ case "$action" in
       lab_say "  ✗ not ready yet:"
       printf '%s\n' "$problems"
       lab_say ""
-      lab_say "  Fix those in lab.yaml and run this again."
+      lab_say "  Fix those in lab.yaml and run this again — except a value that comes"
+      lab_say "  from workshop.yaml, which is the instructors' to fix."
       exit 1
     fi
     lab_load "${variant:-simple}"
@@ -60,8 +61,9 @@ case "$action" in
     # already started and consumed their whole topic.
     lab_load "${variant:-simple}"
     if [[ -z "${OPENSEARCH_PASSWORD:-}" ]]; then
-      lab_say "student.opensearch_password is empty in lab.yaml."
-      lab_say "Your account is '$OPENSEARCH_USERNAME'; the password is on the classroom handout."
+      lab_say "student.opensearch_password is empty."
+      lab_say "Your account is '$OPENSEARCH_USERNAME'; its password comes from workshop.yaml,"
+      lab_say "which the bootstrap writes. Run the bootstrap again, or ask the instructor."
       exit 2
     fi
     lab_head "Creating $OPENSEARCH_INDEX on ${OPENSEARCH_HOSTS:-<opensearch.hosts not set>}"
@@ -72,6 +74,7 @@ case "$action" in
 
   info)
     lab_load "${variant:-full}"
+    lab_student_summary
     lab_topic_summary "${variant:-full}"
     lab_index_summary
     lab_bucket_summary

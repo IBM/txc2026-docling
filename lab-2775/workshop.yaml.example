@@ -1,0 +1,55 @@
+# LAB-2775 — the workshop's values for one lab VM.
+#
+# The instructors write one of these per student, from their own
+# configuration, and put it on that student's VM as ~/lab-2775.yaml. The
+# bootstrap copies it to workshop.yaml, writes kafka.ca_pem to
+# certs/kafka-ca.crt, and makes lab.yaml include it (src/labtools/handout.py).
+#
+# Same sections and keys as lab.yaml. The workshop runs more than one Confluent
+# cluster and more than one IBM Cloud account, to spread the load; which ones a
+# student is on is decided here and nowhere else — every value below the
+# student section is one of those clusters' or accounts', and a student never
+# has to know which.
+#
+# Their IBM Cloud sign-in is not in here: that is for a browser, not a script,
+# and the instructors hand it out beside this file as ~/ibmcloud-signin.html.
+
+student:
+  # Two digits. Every topic, application, consumer group and index the student
+  # owns is derived from it.
+  id: "07"
+  # Their own OpenSearch account is `student<id>`, which may write
+  # `student<id>-*` and nothing else.
+  opensearch_password: ""
+
+kafka:
+  # The Confluent brokers, as the VM reaches them.
+  bootstrap_servers: ""
+  api_key: ""
+  api_secret: ""
+  # The private CA that signed those brokers, inline. Without it every
+  # connection fails — as a timeout, not as a certificate error.
+  ca_pem: |
+    -----BEGIN CERTIFICATE-----
+    ...
+    -----END CERTIFICATE-----
+
+cmf:
+  # Confluent Manager for Apache Flink on the same Confluent system.
+  url: ""
+  auth: ""          # user:password
+  image: ""         # the published pipeline image
+
+watsonx:
+  # The project the embedding calls are billed to, in this account. The key is
+  # only for the dashboard's Ask tab; the deployed job takes its own from a
+  # Kubernetes Secret.
+  project_id: ""
+  api_key: ""
+
+opensearch:
+  hosts: ""
+
+cos:
+  # The name suggested for the student's bucket; `{id}` is their id.
+  bucket_template: txc26-ws-{id}-uploads

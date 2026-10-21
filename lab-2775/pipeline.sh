@@ -88,7 +88,7 @@ case "$action" in
     # and an index that exists. Refusing here beats a job that starts, consumes
     # the whole topic and then fails on its first write.
     if [[ "$SINK_TYPE" == *opensearch* && -z "${OPENSEARCH_HOSTS:-}" ]]; then
-      echo "SINK_TYPE is '$SINK_TYPE' but opensearch.hosts is empty in lab.yaml." >&2
+      echo "SINK_TYPE is '$SINK_TYPE' but opensearch.hosts is empty (it comes from workshop.yaml)." >&2
       echo "Fill it in, or deploy with SINK_TYPE=kafka to skip the index for now." >&2
       exit 2
     fi

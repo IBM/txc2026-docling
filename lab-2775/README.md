@@ -32,11 +32,15 @@ curl -L ibm.biz/txc26-2775-bootstrap | bash -
 ```
 
 That installs `uv`, fetches this directory, builds the environments, and leaves
-you with a `lab.yaml` to fill in. Then:
+you with a `lab.yaml` to fill in. The workshop's values for your VM — your
+student id, your OpenSearch password, the brokers and the Flink control plane
+you were given — come from `~/lab-2775.yaml`, which the instructors put there.
+The bootstrap copies it to `workshop.yaml` and `lab.yaml` includes it.
+`workshop.yaml.example` shows the format, for running the lab off the VM. Then:
 
 ```bash
 cd ~/txc2026-docling/lab-2775
-# edit lab.yaml — your student id, your Docling URL and key, your bucket CRN
+# edit lab.yaml — your Docling URL and key, your bucket CRN
 ./setup.sh check          # is everything reachable?
 ./setup.sh topics         # your five Kafka topics
 ./setup.sh index          # your OpenSearch index
