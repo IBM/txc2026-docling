@@ -1,7 +1,7 @@
 """
 test_connection.py — Verify connectivity to the Docling for IBM watsonx managed service.
 
-Converts docs/regulatory_guidelines_2025.epub and prints the first 500 characters of the
+Converts docs/regulatory_guidelines_2026.epub and prints the first 500 characters of the
 resulting Markdown. A successful run confirms that:
   • the service URL is reachable
   • the API key is valid
@@ -36,7 +36,7 @@ if not service_url or not api_key:
     sys.exit(1)
 
 # ── Convert ────────────────────────────────────────────────────────────────────
-doc_path = Path(__file__).parent.parent / "docs" / "regulatory_guidelines_2025.epub"
+doc_path = Path(__file__).parent.parent / "docs" / "regulatory_guidelines_2026.epub"
 if not doc_path.exists():
     print(f"✗ Document not found: {doc_path}")
     sys.exit(1)
