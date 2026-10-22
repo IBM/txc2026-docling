@@ -331,7 +331,8 @@ cat <<NEXT
 
   1  cd $LAB
   2  ./setup.sh info     your id, and the names the console steps ask for
-  3  the lab guide says when to fill in what lab.yaml marks YOU
+  3  gedit lab.yaml &    keep it open: you paste in the three values it marks
+                        YOU as the lab guide collects them
 
   The lab guide has the rest. If this is a new terminal and the commands are
   not found, run:  export PATH="\$HOME/.local/bin:\$PATH"

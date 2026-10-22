@@ -135,3 +135,32 @@ lab_subscription_summary() {
   lab_note "chunkstopic" "$KAFKA_CHUNKS_TOPIC"
   lab_note "studentid" "$STUDENT_ID"
 }
+
+# --- what to do next ---------------------------------------------------------
+# Every command ends by naming the one after it. The guide says the same, but a
+# student who has just read twenty lines of output is looking at the terminal,
+# not at the guide, and the commonest stall in a rehearsal was not a failure but
+# a student who did not know they had finished a step.
+lab_next() { # lab_next LINE...
+  lab_head "Next"
+  local line
+  for line in "$@"; do lab_say "  $line"; done
+  lab_say ""
+}
+
+# Where a student is, read off the values lab.yaml marks YOU: the first one still
+# empty belongs to the phase they have not finished. Nothing can tell from here
+# whether the event subscription exists, so the last answer asks.
+lab_next_from_config() {
+  if [[ -z "${DOCLING_SERVICE_URL:-}" || -z "${DOCLING_SERVICE_API_KEY:-}" ]]; then
+    lab_next "Phase 1: start your Docling trial (in an ORDINARY window, with your own IBMid)." \
+             "Paste its service URL and API key into lab.yaml, under docling:, and save."
+  elif [[ -z "${COS_BUCKET_CRN:-}" ]]; then
+    lab_next "Phase 2: create your bucket ${COS_BUCKET:+$COS_BUCKET }in the IBM Cloud console (in the PRIVATE window)." \
+             "Paste its CRN into lab.yaml as student.bucket_crn, and save." \
+             "Then ./setup.sh info prints the values for its event subscription."
+  else
+    lab_next "Your event subscription shows Ready? Then, before you upload anything:" \
+             "./setup.sh topics     creates your five Kafka topics"
+  fi
+}

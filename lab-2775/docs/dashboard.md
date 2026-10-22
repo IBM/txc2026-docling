@@ -72,6 +72,13 @@ and puts the bucket behind an **Upload a document** button in the sidebar. It
 cannot *probe* either of them — they run in someone else's cluster — so the
 first evidence they ran is the message count on `docling.chunks` moving.
 
+The button opens a panel, not the bucket. The bucket lives in the workshop's
+IBM Cloud account, which a student signs in to in a private window, while the
+dashboard opens in an ordinary one — where the only IBM Cloud session is their
+own IBMid, and the console answers that the bucket does not exist. The panel
+says so, offers the link to right-click into a private window or to copy, and
+lists which sample document to upload in which phase.
+
 The scripts under `scripts/` (`make ingest`, `make ingest-files`) write the same
 chunk topic by hand. That is a development shortcut around this path, not a
 second way in, and it is deliberately not on the diagram.
@@ -201,6 +208,17 @@ JobManager, point the dashboard at it and the per-vertex view comes back:
 ```bash
 FLINK_REST_URL=http://localhost:8081 ./run.sh
 ```
+
+## Auto-refresh
+
+The sidebar toggle reruns the page on a timer the browser keeps
+(`st.fragment(run_every=…)`), not with a sleep at the end of the script, so a
+click registers at once instead of after the rest of the interval. It runs on
+the Stages, Topics and OpenSearch tabs only — the tab bar is stateful, so the
+page knows which one is open — and pauses on Messages, Ask and Configuration,
+where a rerun would collapse the record being read. The Ask tab keeps its last
+answer in the session as well, so a manual **Refresh now** or a trip to
+another tab does not throw it away.
 
 ## Layout
 
