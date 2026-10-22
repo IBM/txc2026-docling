@@ -29,11 +29,18 @@ Three things make that harder than "convert and index":
 
 ## The documents
 
+They are laid out the way real company documents are, which is not the way a
+converter would like: two columns of text, with wide tables and figures
+spanning both, and tables whose headers are grouped over two rows (*Warning*
+over *Old* and *Revised*, a *Done by* cell spanning four tasks). Recovering the
+reading order and the table structure is Docling's job.
+
+
 | File | What it is | What it shows in the lab |
 |---|---|---|
-| `01-technical-note.pdf` | TN-2026-014, *Bearing temperature drift on the HX-400 pump series*: headings, a figure, two tables, part and serial numbers | The ordinary case. Its chunks go straight through, and it contains no personal data, so the guard finds nothing |
+| `01-technical-note.pdf` | TN-2026-014, *Bearing temperature drift on the HX-400 pump series*: two columns, a figure, two tables with grouped headers, part and serial numbers | The ordinary case. Its chunks go straight through, and it contains no personal data, so the guard finds nothing |
 | `02-customer-record.pdf` | Service case SC-88213, a bearing failure at a brewery: contacts, site details, billing and a refund | E-mail addresses, a card number and an IBAN in ordinary sentences are redacted by default. The phone numbers and the IP address of the telemetry gateway are redacted only once you switch those detectors on |
-| `03-technical-note-reissued.pdf` | The same note as 01, filed again by field service: US Letter instead of A4, a serif typeface, a different title | Docling converts all of it. De-duplication on the text fingerprint then drops every chunk, because the words are the same as 01's |
+| `03-technical-note-reissued.pdf` | The same note as 01, filed again by field service: one column instead of two, US Letter instead of A4, a serif typeface, a different title | Docling converts all of it. De-duplication on the text fingerprint then drops every chunk, because once the reading order is recovered the words are the same as 01's |
 | `04-maintenance-manual.pdf` | OM-HX4, the series' operation and maintenance manual: specifications, alignment tolerances, maintenance schedule, fault finding, spare parts | More material for retrieval, and safe to upload before the PII guard exists. Its re-greasing interval for the HX-420 is the one the technical note later shortened |
 
 ## Questions to ask
