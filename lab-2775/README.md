@@ -89,6 +89,7 @@ JobManager, one job — and the cluster is packed close to its memory ceiling.
 | `flink/` | the `FlinkApplication` descriptors CMF is given |
 | `scripts/` | the executables the two front-ends call |
 | `tests/` | everything that does not need a cluster (`uv run pytest`) |
+| `lab-documents/` | the four PDFs you upload, and the use case they belong to |
 | `docs/ARCHITECTURE.md` | why it is shaped like this — read this before changing anything |
 
 ## Running it without a workshop
