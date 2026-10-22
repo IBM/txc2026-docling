@@ -35,6 +35,20 @@ LAB_SUBTITLE = "Event-Driven Docling for watsonx and Confluent"
 st.set_page_config(page_title=f"{LAB_ID} · {LAB_TITLE}", page_icon="🔎", layout="wide")
 
 RATE_WINDOW_S = 90.0        # how far back a throughput figure looks
+TABS = ("Stages", "Topics", "Messages", "OpenSearch", "Ask", "Configuration")
+# The tabs auto-refresh is for: numbers that move. On the other three a student
+# is reading something — a record, an answer, a setting — and a rerun every five
+# seconds collapses it or, on Ask, throws the answer away mid-sentence.
+LIVE_TABS = ("Stages", "Topics", "OpenSearch")
+# The documents a student uploads, in the order the guide asks for them. The
+# order is not cosmetic: 02 carries a card number and an IBAN, and only the full
+# pipeline's PII guard keeps them out of the index.
+UPLOADS = (
+    ("Phase 3", "01-technical-note.pdf", "the first document: watch its chunks arrive"),
+    ("Phase 4", "04-maintenance-manual.pdf", "a second document to ask questions of"),
+    ("Phase 5", "02-customer-record.pdf", "personal data, only once the full pipeline runs"),
+    ("Phase 5", "03-technical-note-reissued.pdf", "the same words in a different file"),
+)
 SECRET_KEYS = ("KAFKA_API_SECRET", "OPENSEARCH_PASSWORD", "CMF_AUTH", "DOCLING_SERVICE_API_KEY",
                "WATSONX_APIKEY")
 
@@ -90,6 +104,29 @@ def rate_of(key: str, value: int, now: float) -> float | None:
     t0, v0 = series[0]
     span = now - t0
     return None if span < 1.0 else max(0.0, (value - v0) / span)
+
+
+def bucket_popover(where, label: str, *, primary: bool) -> None:
+    """The bucket link, behind one click that says which window it belongs in.
+
+    The bucket is in the workshop's IBM Cloud account, which a student signs in
+    to in a private window. This dashboard opens in an ordinary one, where the
+    only IBM Cloud session is their own IBMid from the Docling trial — so a plain
+    link opened the console as the wrong person, and it answered that the bucket
+    does not exist. The first click explains instead, exactly as the sign-in page
+    on the VM does: right-click the link into a private window, or copy it.
+    """
+    with where.popover(label, type="primary" if primary else "secondary", width="stretch"):
+        st.markdown(
+            "Your bucket is in the **workshop** account, the one you signed in to in a "
+            "**private window**. This dashboard is in an ordinary window.\n\n"
+            f"**Right-click** [{cfg.cos_bucket or 'your bucket'} ↗]({cfg.cos_bucket_url}) and "
+            "choose **Open Link in New Private Window**, or copy the link below into the "
+            "private window you already have."
+        )
+        st.code(cfg.cos_bucket_url, language=None, wrap_lines=True)
+        st.markdown("**What to upload, and when** — all four are in `lab-documents/`")
+        st.markdown("\n".join(f"- **{phase}** · `{name}` — {what}" for phase, name, what in UPLOADS))
 
 
 def fmt_rate(rate: float | None) -> str:
@@ -192,11 +229,7 @@ st.sidebar.divider()
 # uploading a document to the bucket. The link is configuration (COS_BUCKET_URL)
 # rather than a constant, because every lab rebuild mints a different bucket.
 if cfg.event_driven:
-    st.sidebar.link_button(
-        "📤 Upload a document", cfg.cos_bucket_url, width="stretch", type="primary",
-        help=f"IBM Cloud Object Storage{' · ' + cfg.cos_bucket if cfg.cos_bucket else ''} — "
-             "dropping a file in this bucket is what starts the pipeline",
-    )
+    bucket_popover(st.sidebar, "📤 Upload a document", primary=True)
 elif cfg.docling_url and settings_mod.DEV_MODE:
     st.sidebar.caption(
         "No bucket in the local stack: ingest with `make ingest` "
@@ -205,12 +238,21 @@ elif cfg.docling_url and settings_mod.DEV_MODE:
 if cfg.docling_ui_url:
     st.sidebar.link_button(
         "🧾 Docling instance", cfg.docling_ui_url, width="stretch",
-        help="The service that converts and chunks, and writes the chunk topic itself",
+        help="The service that converts and chunks, and writes the chunk topic itself. "
+             "It is yours, under your own IBMid, so it opens in this ordinary window.",
     )
 
 st.sidebar.divider()
 auto = st.sidebar.toggle("Auto-refresh", value=False)
 interval = st.sidebar.slider("Every (s)", 2, 30, 5, disabled=not auto)
+# The tab bar's own state, from the previous run: it is drawn further down, but
+# whether this run ends by scheduling the next one depends on it.
+open_tab = st.session_state.get("tab") or TABS[0]
+if auto and open_tab not in LIVE_TABS:
+    st.sidebar.caption(
+        f"⏸ Paused while you are on **{open_tab}**, so nothing you are reading is cleared. "
+        "It resumes on Stages, Topics and OpenSearch."
+    )
 if st.sidebar.button("Refresh now", width="stretch"):
     st.rerun()
 
@@ -464,8 +506,9 @@ if backlog and not job.running:
         "Nothing will consume them until it is running."
     )
 
+# Stateful, so the sidebar can tell which tab is open: see LIVE_TABS.
 tab_dag, tab_topics, tab_messages, tab_index, tab_ask, tab_config = st.tabs(
-    ["Stages", "Topics", "Messages", "OpenSearch", "Ask", "Configuration"]
+    list(TABS), key="tab", on_change="rerun"
 )
 
 
@@ -484,8 +527,7 @@ with tab_dag:
         "triggers a Docling job. Nothing polls, and nothing is scheduled."
     )
     if cfg.cos_bucket_url:
-        steps[0].link_button("Open the bucket ↗", cfg.cos_bucket_url, width="stretch",
-                             type="primary")
+        bucket_popover(steps[0], "Open the bucket ↗", primary=True)
     steps[1].markdown(brand.img("docling", height=26), unsafe_allow_html=True)
     steps[1].markdown(
         "**2 · Docling converts and chunks**  \n"
@@ -850,12 +892,19 @@ with tab_ask:
 
         if asked and question.strip():
             with st.spinner("Embedding the question, searching, answering…"):
-                result = rag_mod.answer(
+                st.session_state["answer"] = (question.strip(), rag_mod.answer(
                     ask_client, index_name, question,
                     k=top_k, lexical=lexical, dimension=ask_view.dimension,
                     generation=GenerationConfig(model_id=model_id),
-                )
+                ))
 
+        # Kept in the session rather than in this run: any rerun — Refresh now,
+        # switching tabs and back — used to throw the answer away, and a student
+        # comparing it against the passages lost both.
+        if "answer" in st.session_state:
+            asked_question, result = st.session_state["answer"]
+            if asked_question != question.strip():
+                st.caption(f"The last answer, to: *{asked_question}*")
             if result.error:
                 st.error(result.error)
             if result.ok:
@@ -915,6 +964,16 @@ with tab_config:
         language="text",
     )
 
-if auto:
-    time.sleep(interval)
-    st.rerun()
+# The next refresh is scheduled by the browser rather than slept on here. A
+# `time.sleep` at the end of the script kept every run "running" for the whole
+# interval, so a click anywhere on the page waited up to that long to register.
+if auto and open_tab in LIVE_TABS:
+    st.session_state["ran_at"] = time.monotonic()
+
+    @st.fragment(run_every=interval)
+    def _next_refresh() -> None:
+        # Runs once inside this run, which is not a refresh, then on the timer.
+        if time.monotonic() - st.session_state["ran_at"] >= interval * 0.9:
+            st.rerun(scope="app")
+
+    _next_refresh()

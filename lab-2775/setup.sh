@@ -36,6 +36,8 @@ case "$action" in
     lab_load "${variant:-simple}"
     lab_say ""
     "${UV_RUN[@]}" python scripts/check_reachable.py
+    lab_say ""
+    lab_next_from_config
     ;;
 
   topics)
@@ -52,6 +54,7 @@ case "$action" in
     lab_bucket_summary
     lab_subscription_summary
     lab_say ""
+    lab_next "./setup.sh index      creates your OpenSearch index"
     ;;
 
   index)
@@ -70,6 +73,8 @@ case "$action" in
     "${UV_RUN[@]}" python scripts/setup_opensearch.py
     lab_index_summary
     lab_say ""
+    lab_next "./pipeline.sh inspect     starts the dashboard. Leave it running, open a second" \
+             "                          terminal, and upload lab-documents/01-technical-note.pdf."
     ;;
 
   info)
@@ -80,6 +85,7 @@ case "$action" in
     lab_bucket_summary
     lab_subscription_summary
     lab_say ""
+    lab_next_from_config
     ;;
 
   *) sed -n '2,15p' "$0" >&2; exit 2 ;;

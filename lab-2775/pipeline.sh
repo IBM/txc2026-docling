@@ -119,7 +119,15 @@ case "$action" in
     lab_say "  uploaded so far is processed again by this pipeline."
     lab_say ""
     lab_say "  watch it:   ./pipeline.sh status     (or: ./pipeline.sh inspect)"
-    [[ -n "${COS_BUCKET:-}" ]] && lab_say "  upload to:  $COS_BUCKET"
+    [[ -n "${COS_BUCKET:-}" ]] && lab_say "  upload to:  $COS_BUCKET   (in the PRIVATE window)"
+    if [[ "$variant" == "simple" ]]; then
+      lab_next "Wait for RUNNING, then watch the replay in the dashboard's Stages tab." \
+               "Search the index in the OpenSearch tab, and ask it something in the Ask tab." \
+               "Then upload lab-documents/04-maintenance-manual.pdf."
+    else
+      lab_next "Wait for RUNNING, then upload lab-documents/02-customer-record.pdf" \
+               "and compare $KAFKA_QUARANTINE_TOPIC with $KAFKA_OUTPUT_TOPIC in the Messages tab."
+    fi
     ;;
 
   status)
@@ -175,7 +183,15 @@ case "$action" in
     lab_say "inspecting ws-${STUDENT_ID}: $KAFKA_CHUNKS_TOPIC"
     if [[ -z "${COS_BUCKET_CRN:-}" ]]; then
       lab_say "  (no bucket CRN in lab.yaml — the upload button will not link anywhere)"
+    else
+      # The dashboard opens in an ordinary window; the bucket is in the account
+      # signed in to in a private one. Said here, and again behind the button.
+      lab_say "  The dashboard opens in an ordinary browser window. Your bucket is not there:"
+      lab_say "  it is in the workshop account, in your PRIVATE window. Upload a document in the"
+      lab_say "  dashboard shows you how to open it there."
     fi
+    lab_say ""
+    lab_say "  Leave this running, and open a second terminal for everything else."
     # Its own environment, on purpose: this needs streamlit, nothing else does,
     # and a Streamlit upgrade must never move something the pipeline depends on.
     exec env UV_PROJECT_ENVIRONMENT="$LAB_ROOT/.venv-dashboard" \
