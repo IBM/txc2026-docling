@@ -16,6 +16,7 @@ Convert, extract, and build your own document-powered app. Turn a bundle of
 PDFs, Word documents, and EPUBs into a filled compliance form — with IBM Bob or
 a Python notebook, no GPU required.
 [Materials](lab-1499/README.md) ·
+[Lab guide (PDF)](lab-1499/LAB-1499-Lab-Guide.pdf) ·
 [Session catalog →](https://reg.tools.ibm.com/flow/ibm/techxchange26/sessioncatalog/page/sessioncatalog/session/1776759382574001G1Ty)
 
 ### 🧪 LAB-2775 — From Bucket to RAG
@@ -23,6 +24,7 @@ a Python notebook, no GPU required.
 Event-driven Docling for watsonx and Confluent. Drop a PDF in a bucket; a few
 seconds later you can ask questions about it.
 [Materials](lab-2775/README.md) ·
+[Lab guide (PDF)](lab-2775/LAB-2775-Lab-Guide.pdf) ·
 [Session catalog →](https://reg.tools.ibm.com/flow/ibm/techxchange26/sessioncatalog/page/sessioncatalog/session/1779350040908001rzBq)
 
 ### 🎤 TEC-2232 — Docling for IBM watsonx: Building Agentic Document Workflows at Enterprise Speed
