@@ -48,7 +48,7 @@ cd ~/txc2026-docling/lab-2775
 ./pipeline.sh inspect     # the dashboard, on :8501
 ```
 
-The lab guide handed out with the workshop is the long version, with the two
+The [lab guide](LAB-2775-Lab-Guide.pdf) handed out with the workshop is the long version, with the two
 console steps (creating your bucket, subscribing it) that no script here does.
 
 ## The two scripts

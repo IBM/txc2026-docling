@@ -2,6 +2,8 @@
 ## Convert, Extract, and Build Your Own Document-Powered App
 
 > **IBM TechXchange 2026 · Hands-on Lab · 90 minutes**
+>
+> 📄 The printable [lab guide (PDF)](LAB-1499-Lab-Guide.pdf) handed out at the session.
 
 ---
 
